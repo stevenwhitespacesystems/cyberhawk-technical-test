@@ -41,9 +41,8 @@ Just Document what you had hoped to achieve and your thoughts behind any unfinis
 - Specs/Plans/Designs
 
 ### Submitting The Task
-We're not too fussy about how you submit the task, providing it gets to us and we're able to run it we'll be happy however here are some of the ways we commonly see:
-- Fork this repo, work and add us as a collaborator on your GitHub repo and send us a link
-- ZIP the project and email it to us at andy.rayne@thecyberhawk.com / joe.ware@thecyberhawk.com
+Ideally you will fork this repo, work on it then email us with details of where to access it.
+Alternatively you can download locally and email us a zip of your completed work.
 
 ## Setting Everything Up
 As mentioned above we have chosen to make use of Laravel Sail as the foundation of this technical test.
