@@ -52,7 +52,7 @@
         ],
         "format-stan": [
             "vendor/bin/ecs --fix",
-            "vendor/bin/phpstan analyse --level max --configuration phpstan.neon app config database lang routes tests"
+            "vendor/bin/phpstan analyse --level max --configuration phpstan.neon app config lang routes tests"
         ]
     },
     "extra": {
