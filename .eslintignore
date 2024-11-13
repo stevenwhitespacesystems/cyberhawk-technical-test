@@ -1,0 +1,15 @@
+node_modules
+dist
+build
+public
+vite.config.ts
+app
+bootstrap
+config
+database
+lang
+notes
+routes
+storage
+tests
+vendor

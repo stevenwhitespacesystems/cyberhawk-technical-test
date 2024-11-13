@@ -1,0 +1,14 @@
+node_modules
+dist
+build
+public
+app
+bootstrap
+config
+database
+lang
+notes
+routes
+storage
+tests
+vendor
