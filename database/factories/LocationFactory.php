@@ -19,7 +19,12 @@ class LocationFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'description' => $this->faker->sentence(15),
+            'address_line_1' => $this->faker->streetAddress(),
+            'city' => $this->faker->city(),
+            'postal_code' => $this->faker->postcode(),
+            'country' => 'United Kingdom',
+            'country_code' => 'GB',
         ];
     }
 }
