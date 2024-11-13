@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\EquipmentType;
+use App\Enums\InspectionStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +21,11 @@ class EquipmentFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'serial_number' => $this->faker->unique()->numerify('##########'),
+            'nickname' => $this->faker->unique()->word(),
+            'type' => EquipmentType::WIND_TURBINE,
+            'status' => InspectionStatus::OK,
+            'installation_date' => now()->subDays(rand(1, 365)),
         ];
     }
 }
