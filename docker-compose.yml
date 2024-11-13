@@ -67,14 +67,7 @@ services:
         networks:
             - sail
         healthcheck:
-            test:
-                [
-                    "CMD",
-                    "wget",
-                    "--no-verbose",
-                    "--spider",
-                    "http://localhost:7700/health",
-                ]
+            test: ["CMD", "wget", "--no-verbose", "--spider", "http://localhost:7700/health"]
             retries: 3
             timeout: 5s
     mailhog:
@@ -88,6 +81,15 @@ services:
         image: "selenium/standalone-chrome"
         volumes:
             - "/dev/shm:/dev/shm"
+        networks:
+            - sail
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        ports:
+            - 8080:80
+        environment:
+            PMA_HOSTS: "mysql"
         networks:
             - sail
 networks:
