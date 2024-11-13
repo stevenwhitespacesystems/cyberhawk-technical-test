@@ -41,3 +41,11 @@ To fix this I updated `laravel/sail` using the following command:
 This updated Laravel Sail to the latest compatible version and updated the Docker file to use Ubuntu 22.04.
 
 The project could now be accessed after running `sail up -d`
+
+## Frontend
+
+I opted to use Vite and React instead of Laravel Mix as Vite is the currently supported build tool for Laravel and React is the modern standard for building frontend applications.
+
+I followed this migration guide to update the project: https://github.com/laravel/vite-plugin/blob/main/UPGRADE.md#migrating-from-laravel-mix-to-vite
+
+I also included TypeScript as it is the modern standard for building frontend applications and is supported by Vite.
