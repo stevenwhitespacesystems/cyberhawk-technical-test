@@ -49,3 +49,13 @@ I opted to use Vite and React instead of Laravel Mix as Vite is the currently su
 I followed this migration guide to update the project: https://github.com/laravel/vite-plugin/blob/main/UPGRADE.md#migrating-from-laravel-mix-to-vite
 
 I also included TypeScript as it is the modern standard for building frontend applications and is supported by Vite.
+
+I've also installed prettier and eslint to format the code and lint the code respectively using the airbnb style guide.
+
+## Backend
+
+I've installed ECS to lint the php code and PHPStan to check for errors and potential security issues.
+
+## Git Hooks
+
+I've installed Husky to run the format-lint and format-stan commands on commit which will format the typescript code and lint it as well as check the php code for errors and potential security issues.
