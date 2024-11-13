@@ -16,9 +16,9 @@
         "noFallthroughCasesInSwitch": true,
         "baseUrl": ".",
         "paths": {
-            "@/*": ["resources/js/*"]
+            "@/*": ["./resources/js/*"]
         }
     },
-    "include": ["resources/js/**/*"],
+    "include": ["./resources/js/**/*"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }
