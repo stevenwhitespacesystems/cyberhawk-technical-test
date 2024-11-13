@@ -6,7 +6,9 @@
         "lint": "eslint . --ext .ts,.tsx",
         "lint:fix": "eslint . --ext .ts,.tsx --fix",
         "format": "prettier --write \"**/*.{ts,tsx,css,scss,md}\"",
-        "format-lint": "npm run format && npm run lint"
+        "format-lint": "npm run format && npm run lint",
+        "prepare": "husky",
+        "commit-check": "npm run format-lint && composer format-stan"
     },
     "devDependencies": {
         "@types/lodash": "^4.17.13",
@@ -25,6 +27,7 @@
         "eslint-plugin-prettier": "^5.2.1",
         "eslint-plugin-react": "^7.37.2",
         "eslint-plugin-react-hooks": "^4.6.2",
+        "husky": "^9.1.6",
         "laravel-vite-plugin": "^1.0.6",
         "postcss": "^8.1.14",
         "prettier": "^3.3.3",
