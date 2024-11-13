@@ -52,6 +52,8 @@ I also included TypeScript as it is the modern standard for building frontend ap
 
 I've also installed prettier and eslint to format the code and lint the code respectively using the airbnb style guide.
 
+For styling I've installed Tailwind CSS as it is the modern standard for styling applications utilising shadcn/ui for the components.
+
 ## Backend
 
 I've installed ECS to lint the php code and PHPStan to check for errors and potential security issues.
