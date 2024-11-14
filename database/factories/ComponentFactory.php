@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\ComponentType;
 use App\Enums\InspectionStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,7 @@ class ComponentFactory extends Factory
         return [
             'serial_number' => $this->faker->unique()->numerify('##########'),
             'nickname' => $this->faker->unique()->word(),
+            'type' => $this->faker->randomElement(ComponentType::values()),
             'status' => InspectionStatus::OK,
             'specifications' => $this->faker->sentence(),
         ];

@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use App\Enums\EquipmentType;
 use App\Enums\InspectionStatus;
+use App\Models\Component;
 use App\Models\Equipment;
 use App\Models\Location;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -161,5 +162,13 @@ class DatabaseSeeder extends Seeder
                 'latitude' => 52.936852384449075,
                 'longitude' => -0.2192910795125103,
             ]);
+
+        $equipment = Equipment::all();
+        foreach ($equipment as $asset) {
+            Component::factory()
+                ->for($asset)
+                ->count(rand(1, 20))
+                ->create();
+        }
     }
 }
