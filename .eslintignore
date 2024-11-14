@@ -13,3 +13,4 @@ routes
 storage
 tests
 vendor
+resources/js/components/ui/*

@@ -11,6 +11,8 @@
         "commit-check": "npm run format-lint && composer format-stan"
     },
     "devDependencies": {
+        "@tanstack/router-devtools": "^1.81.5",
+        "@tanstack/router-plugin": "^1.79.0",
         "@types/lodash": "^4.17.13",
         "@types/node": "^22.9.0",
         "@types/react": "^18.3.12",
@@ -40,7 +42,9 @@
     },
     "type": "module",
     "dependencies": {
+        "@radix-ui/react-label": "^2.1.0",
         "@radix-ui/react-slot": "^1.1.0",
+        "@tanstack/react-router": "^1.81.5",
         "axios": "^1.1.2",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",
