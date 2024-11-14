@@ -25,9 +25,9 @@ class Equipment extends Model
         'status' => InspectionStatus::class,
     ];
 
-    public function location(): BelongsTo
+    public function site(): BelongsTo
     {
-        return $this->belongsTo(Location::class);
+        return $this->belongsTo(Site::class);
     }
 
     public function components(): HasMany

@@ -9,6 +9,7 @@ use App\Enums\InspectionStatus;
 use App\Models\Component;
 use App\Models\Equipment;
 use App\Models\Location;
+use App\Models\Site;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -21,35 +22,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $harburnhead = Location::factory()->create([
+        $harburnhead = Site::factory()->create([
             'name' => 'Harburnhead Wind Farm',
             'short_identifier' => 'WF-HB',
             'latitude' => 55.8168596,
             'longitude' => -3.565025,
         ]);
 
-        $braesOfDoune = Location::factory()->create([
+        $braesOfDoune = Site::factory()->create([
             'name' => 'Braes of Doune Wind Farm',
             'short_identifier' => 'WF-BoD',
             'latitude' => 56.2827615,
             'longitude' => -4.1053899,
         ]);
 
-        $kirkHill = Location::factory()->create([
+        $kirkHill = Site::factory()->create([
             'name' => 'Kirk Hill Wind Farm',
             'short_identifier' => 'WF-KH',
             'latitude' => 55.3099298,
             'longitude' => -4.7415814,
         ]);
 
-        $clyde = Location::factory()->create([
+        $clyde = Site::factory()->create([
             'name' => 'Clyde Wind Farm',
             'short_identifier' => 'WF-CLY',
             'latitude' => 55.446966,
             'longitude' => -3.6016276,
         ]);
 
-        $donington = Location::factory()->create([
+        $donington = Site::factory()->create([
             'name' => 'Donington Wind Farm',
             'short_identifier' => 'WF-Don',
             'latitude' => 52.9259373,

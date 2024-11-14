@@ -8,7 +8,7 @@ use App\Models\Location;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class LocationPolicy
+class SitePolicy
 {
     use HandlesAuthorization;
 
