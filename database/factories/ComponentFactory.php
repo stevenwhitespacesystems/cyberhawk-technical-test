@@ -21,8 +21,8 @@ class ComponentFactory extends Factory
     public function definition()
     {
         return [
-            'serial_number' => $this->faker->unique()->numerify('##########'),
-            'nickname' => $this->faker->unique()->word(),
+            'serial_number' => $this->faker->numerify('##########'),
+            'nickname' => $this->faker->word(),
             'type' => $this->faker->randomElement(ComponentType::values()),
             'status' => InspectionStatus::OK,
             'specifications' => $this->faker->sentence(),
