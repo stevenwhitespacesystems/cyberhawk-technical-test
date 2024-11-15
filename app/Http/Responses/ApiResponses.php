@@ -18,6 +18,13 @@ final class ApiResponses
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
+    public static function error(string $message, int $status = Response::HTTP_BAD_REQUEST): JsonResponse
+    {
+        return new JsonResponse([
+            'message' => $message,
+        ], $status);
+    }
+
     /**
      * @param array<string, mixed> $data
      */
