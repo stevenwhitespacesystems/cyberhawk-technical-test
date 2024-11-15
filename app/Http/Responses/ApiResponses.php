@@ -14,7 +14,7 @@ final class ApiResponses
     {
         return new JsonResponse([
             'message' => 'Validation errors',
-            'data' => $validator->errors(),
+            'data' => $validator->errors()->all(),
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
