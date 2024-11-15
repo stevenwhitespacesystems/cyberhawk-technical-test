@@ -3,34 +3,34 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { FieldApi, useForm } from "@tanstack/react-form";
+import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import { zodValidator } from "@tanstack/zod-form-adapter";
+import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
+import { FieldInfo } from "./FieldInfo";
 
-// eslint-disable-next-line
-function FieldInfo({ field }: { field: FieldApi<any, any, any, any> }) {
-    return (
-        <>
-            {field.state.meta.isTouched && field.state.meta.errors.length ? (
-                <em>{field.state.meta.errors.join(",")}</em>
-            ) : null}
-            {field.state.meta.isValidating ? "Validating..." : null}
-        </>
-    );
-}
-
-const registerSchema = z.object({
-    name: z.string().min(1, "[Form] Name is required"),
-    email: z.string().email("[Form] Invalid email address"),
-    password: z.string().min(8, "[Form] Password must be at least 8 characters"),
-    password_confirmation: z
-        .string()
-        .min(8, "[Form] Password confirmation must be at least 8 characters"),
-});
+const registerSchema = z
+    .object({
+        name: z.string().min(1, "Name is required"),
+        email: z.string().email(),
+        password: z.string().min(8, "Password must be at least 8 characters"),
+        password_confirmation: z.string().min(8, "Password confirmation is required"),
+    })
+    .superRefine(({ password, password_confirmation }, ctx) => {
+        if (password !== password_confirmation) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: "Passwords do not match",
+                path: ["password_confirmation"],
+            });
+        }
+    });
 
 type RegisterFormType = z.infer<typeof registerSchema>;
 
 export function RegisterForm() {
+    const { toast } = useToast();
     const form = useForm({
         defaultValues: {
             name: "",
@@ -39,9 +39,25 @@ export function RegisterForm() {
             password_confirmation: "",
         } as RegisterFormType,
         onSubmit: async ({ value }) => {
-            // console.log(value);
-            // const response = await axios.post("/api/register", values);
-            // console.log(response);
+            try {
+                await axios.post("/api/register", value);
+                // TODO: Redirect to Dashboard
+            } catch (error) {
+                if (axios.isAxiosError(error) && error.response?.data?.data) {
+                    toast({
+                        variant: "destructive",
+                        title: "Error",
+                        description: error.response.data.data[0],
+                    });
+
+                    return;
+                }
+
+                toast({
+                    title: "Error",
+                    description: "Something went wrong",
+                });
+            }
         },
         validatorAdapter: zodValidator(),
         validators: {

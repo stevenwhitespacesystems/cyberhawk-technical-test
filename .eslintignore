@@ -14,3 +14,4 @@ storage
 tests
 vendor
 resources/js/components/ui/*
+resources/js/hooks/*

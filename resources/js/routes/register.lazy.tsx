@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import { RegisterForm } from '@/components/register-form'
+import { RegisterForm } from '@/components/RegisterForm'
 
 export const Route = createLazyFileRoute('/register')({
   component: Register,
