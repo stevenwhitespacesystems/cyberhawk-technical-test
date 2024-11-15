@@ -55,6 +55,7 @@ final class User extends Authenticatable implements ModelInterface
     public function password(): Attribute
     {
         return new Attribute(
+            get: fn (string $value) => $value,
             set: fn (string $value) => Hash::make($value, ['rounds' => 12]),
         );
     }

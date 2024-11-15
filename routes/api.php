@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public routes
+Route::post('/login', LoginController::class);
 Route::post('/register', RegisterController::class);
 
 // Protected routes
