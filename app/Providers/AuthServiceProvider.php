@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Contracts\Services\Auth\RegisterServiceContract;
-use App\Services\Auth\RegisterService;
+use App\Contracts\Services\AuthServiceContract;
+use App\Services\AuthService;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -31,6 +31,6 @@ class AuthServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        $this->app->bind(RegisterServiceContract::class, RegisterService::class);
+        $this->app->bind(AuthServiceContract::class, AuthService::class);
     }
 }

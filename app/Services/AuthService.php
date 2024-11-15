@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Services\Auth;
+namespace App\Services;
 
-use App\Contracts\Services\Auth\RegisterServiceContract;
+use App\Contracts\Services\AuthServiceContract;
 use App\DTO\RegisterRequestDTO;
 use App\DTO\RegisterResponseDTO;
 use App\Factories\UserFactory;
 use App\Models\User;
 
-final class RegisterService implements RegisterServiceContract
+final class AuthService implements AuthServiceContract
 {
     public function __construct(
         private readonly UserFactory $userFactory

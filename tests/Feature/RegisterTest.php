@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Contracts\Services\Auth\RegisterServiceContract;
+use App\Contracts\Services\AuthServiceContract;
 use App\DTO\RegisterResponseDTO;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +36,7 @@ class RegisterTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $jsonResponse = json_decode($response->getContent(), true);
         $this->assertEquals('Validation errors', $jsonResponse['message']);
-        $this->assertEquals('The name field is required.', $jsonResponse['data']['name'][0]);
+        $this->assertEquals('The name field is required.', $jsonResponse['data'][0]);
     }
 
     public function test_failed_validation_on_email(): void
@@ -51,7 +51,7 @@ class RegisterTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $jsonResponse = json_decode($response->getContent(), true);
         $this->assertEquals('Validation errors', $jsonResponse['message']);
-        $this->assertEquals('The email must be a valid email address.', $jsonResponse['data']['email'][0]);
+        $this->assertEquals('The email must be a valid email address.', $jsonResponse['data'][0]);
     }
 
     public function test_failed_validation_on_password(): void
@@ -66,14 +66,14 @@ class RegisterTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $jsonResponse = json_decode($response->getContent(), true);
         $this->assertEquals('Validation errors', $jsonResponse['message']);
-        $this->assertEquals('The password field is required.', $jsonResponse['data']['password'][0]);
+        $this->assertEquals('The password field is required.', $jsonResponse['data'][0]);
     }
 
     public function test_failed_validation_on_password_confirmation(): void
     {
         $response = $this->postJson('/api/register', [
             'name' => 'Joe Bloggs',
-            'email' => 'invalid-email',
+            'email' => 'test@test.com',
             'password' => 'password',
             'password_confirmation' => 'password2',
         ]);
@@ -81,7 +81,7 @@ class RegisterTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $jsonResponse = json_decode($response->getContent(), true);
         $this->assertEquals('Validation errors', $jsonResponse['message']);
-        $this->assertEquals('The password confirmation does not match.', $jsonResponse['data']['password'][0]);
+        $this->assertEquals('The password confirmation does not match.', $jsonResponse['data'][0]);
     }
 
     public function test_successful_registration(): void
@@ -97,7 +97,7 @@ class RegisterTest extends TestCase
             token: $token
         );
 
-        $this->mock(RegisterServiceContract::class, function ($mock) use ($responseDto) {
+        $this->mock(AuthServiceContract::class, function ($mock) use ($responseDto) {
             $mock->shouldReceive('register')
                 ->once()
                 ->andReturn($responseDto);
