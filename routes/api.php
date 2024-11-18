@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,5 +21,6 @@ Route::post('/login', LoginController::class);
 Route::post('/register', RegisterController::class);
 
 // Protected routes
-Route::group(['middleware' => 'auth:sanctum'], static function () {
+Route::group(['middleware' => ['auth:sanctum']], static function () {
+    Route::get('/logout', LogoutController::class);
 });

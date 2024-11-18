@@ -76,4 +76,5 @@ composer install --ignore-platform-reqs
 
 This is a place for you to add your notes, plans, thinking and any feedback you have for us of the task, please feel free to include whatever you like here, we'll make sure to read it.
 
-[Setup](notes/Setup.md)
+-   [Setup](notes/Setup.md)
+-   [User Authentication](<notes/User Authentication.md>)

@@ -21,7 +21,7 @@ final class ApiResponses
     public static function error(string $message, int $status = Response::HTTP_BAD_REQUEST): JsonResponse
     {
         return new JsonResponse([
-            'message' => $message,
+            'data' => $message,
         ], $status);
     }
 

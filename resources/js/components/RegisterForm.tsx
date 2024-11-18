@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -31,6 +31,7 @@ type RegisterFormType = z.infer<typeof registerSchema>;
 
 export function RegisterForm() {
     const { toast } = useToast();
+    const navigate = useNavigate();
     const form = useForm({
         defaultValues: {
             name: "",
@@ -41,7 +42,7 @@ export function RegisterForm() {
         onSubmit: async ({ value }) => {
             try {
                 await axios.post("/api/register", value);
-                // TODO: Redirect to Dashboard
+                navigate({ to: "/verify-email" });
             } catch (error) {
                 if (axios.isAxiosError(error) && error.response?.data?.data) {
                     toast({
@@ -54,6 +55,7 @@ export function RegisterForm() {
                 }
 
                 toast({
+                    variant: "destructive",
                     title: "Error",
                     description: "Something went wrong",
                 });

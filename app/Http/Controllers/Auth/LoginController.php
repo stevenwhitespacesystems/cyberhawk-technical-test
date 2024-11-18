@@ -35,10 +35,10 @@ class LoginController extends Controller
             ]);
         } catch (ModelNotFoundException $e) {
             // Didn't find user by email
-            return ApiResponses::error('User not found', Response::HTTP_NOT_FOUND);
+            return ApiResponses::error('Incorrect email/password', Response::HTTP_NOT_FOUND);
         } catch (BadUserCredentialsException $e) {
             // Password is incorrect
-            return ApiResponses::error('User not found', Response::HTTP_NOT_FOUND);
+            return ApiResponses::error('Incorrect email/password', Response::HTTP_NOT_FOUND);
         }
     }
 }
