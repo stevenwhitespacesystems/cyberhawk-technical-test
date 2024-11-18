@@ -14,4 +14,6 @@ interface AuthServiceContract
     public function login(LoginRequestDTO $dto): LoginResponseDTO;
 
     public function register(RegisterRequestDTO $dto): RegisterResponseDTO;
+
+    public function logout(): void;
 }
