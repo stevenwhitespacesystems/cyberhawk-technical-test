@@ -13,13 +13,17 @@ use App\Exceptions\BadUserCredentialsException;
 use App\Factories\UserFactory;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Contracts\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
 
 final class AuthService implements AuthServiceContract
 {
     public function __construct(
         private readonly UserFactory $userFactory,
-        private readonly UserRepository $userRepository
+        private readonly UserRepository $userRepository,
+        private readonly Guard $auth
     ) {
     }
 
@@ -45,6 +49,15 @@ final class AuthService implements AuthServiceContract
         $token = $this->generateToken($user);
 
         return new RegisterResponseDTO($user, $token);
+    }
+
+    public function logout(): void
+    {
+        /** @var User|HasApiTokens $user */
+        $user = $this->auth->user();
+        /** @var PersonalAccessToken $accessToken */
+        $accessToken = $user->currentAccessToken();
+        $accessToken->delete();
     }
 
     private function generateToken(User $user): string
