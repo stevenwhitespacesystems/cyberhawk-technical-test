@@ -25,7 +25,6 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useAuthStore } from "@/state/auth-store";
 import { NavTertiary } from "./nav-tertiary";
 
 const data = {
