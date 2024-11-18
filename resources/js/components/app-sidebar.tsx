@@ -5,6 +5,7 @@ import {
     Command,
     Frame,
     LifeBuoy,
+    ListChecks,
     Map,
     PieChart,
     Send,
@@ -13,7 +14,6 @@ import {
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
-import { NavProjects } from "@/components/nav-projects";
 import { NavSecondary } from "@/components/nav-secondary";
 import { NavUser } from "@/components/nav-user";
 import {
@@ -26,128 +26,54 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { useAuthStore } from "@/state/auth-store";
+import { NavTertiary } from "./nav-tertiary";
 
 const data = {
     navMain: [
         {
-            title: "Playground",
-            url: "#",
-            icon: SquareTerminal,
+            title: "Inspections",
+            url: "/inspections",
+            icon: ListChecks,
             isActive: true,
             items: [
                 {
+                    title: "Create",
+                    url: "/inspections/create",
+                },
+                {
                     title: "History",
-                    url: "#",
-                },
-                {
-                    title: "Starred",
-                    url: "#",
-                },
-                {
-                    title: "Settings",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Models",
-            url: "#",
-            icon: Bot,
-            items: [
-                {
-                    title: "Genesis",
-                    url: "#",
-                },
-                {
-                    title: "Explorer",
-                    url: "#",
-                },
-                {
-                    title: "Quantum",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Documentation",
-            url: "#",
-            icon: BookOpen,
-            items: [
-                {
-                    title: "Introduction",
-                    url: "#",
-                },
-                {
-                    title: "Get Started",
-                    url: "#",
-                },
-                {
-                    title: "Tutorials",
-                    url: "#",
-                },
-                {
-                    title: "Changelog",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Settings",
-            url: "#",
-            icon: Settings2,
-            items: [
-                {
-                    title: "General",
-                    url: "#",
-                },
-                {
-                    title: "Team",
-                    url: "#",
-                },
-                {
-                    title: "Billing",
-                    url: "#",
-                },
-                {
-                    title: "Limits",
-                    url: "#",
+                    url: "/inspections",
                 },
             ],
         },
     ],
     navSecondary: [
         {
-            title: "Support",
-            url: "#",
-            icon: LifeBuoy,
-        },
-        {
-            title: "Feedback",
-            url: "#",
-            icon: Send,
-        },
-    ],
-    projects: [
-        {
-            name: "Design Engineering",
+            title: "Sites",
             url: "#",
             icon: Frame,
         },
         {
-            name: "Sales & Marketing",
+            title: "Equipment",
             url: "#",
             icon: PieChart,
         },
         {
-            name: "Travel",
+            title: "Components",
             url: "#",
             icon: Map,
+        },
+    ],
+    navTertiary: [
+        {
+            title: "Settings",
+            url: "/settings",
+            icon: Settings2,
         },
     ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const user = useAuthStore((state) => state.user);
     return (
         <Sidebar variant="inset" {...props}>
             <SidebarHeader>
@@ -156,10 +82,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         <SidebarMenuButton size="lg" asChild>
                             <a href="/app">
                                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                                    <Command className="size-4" />
+                                    <Send className="size-4" />
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
-                                    <span className="truncate font-semibold">CyberHawk Tech</span>
+                                    <span className="truncate font-semibold">Cyberhawk</span>
                                 </div>
                             </a>
                         </SidebarMenuButton>
@@ -168,11 +94,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarHeader>
             <SidebarContent>
                 <NavMain items={data.navMain} />
-                <NavProjects projects={data.projects} />
-                <NavSecondary items={data.navSecondary} className="mt-auto" />
+                <NavSecondary items={data.navSecondary} />
+                <NavTertiary items={data.navTertiary} className="mt-auto" />
             </SidebarContent>
             <SidebarFooter>
-                <NavUser user={user} />
+                <NavUser />
             </SidebarFooter>
         </Sidebar>
     );

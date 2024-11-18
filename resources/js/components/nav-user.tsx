@@ -42,12 +42,9 @@ function getAvatarInitials(name: string) {
         .join("");
 }
 
-type NavUserProps = {
-    user: UserState | null;
-};
-
-export function NavUser({ user }: NavUserProps) {
+export function NavUser() {
     const { isMobile } = useSidebar();
+    const user = useAuthStore((state) => state.user);
     const clearAuth = useAuthStore((state) => state.clearAuth);
     const router = useRouter();
     const { toast } = useToast();
@@ -76,6 +73,10 @@ export function NavUser({ user }: NavUserProps) {
             });
         },
     });
+
+    if (!user) {
+        return null;
+    }
 
     return (
         <SidebarMenu>
