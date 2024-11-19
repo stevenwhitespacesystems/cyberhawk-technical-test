@@ -1,5 +1,3 @@
-"use client";
-
 import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "lucide-react";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -18,7 +16,7 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from "@/components/ui/sidebar";
-import { useAuthStore, UserState } from "@/state/auth-store";
+import { useAuthStore } from "@/state/auth-store";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "@tanstack/react-router";

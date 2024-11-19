@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Component, ListChecks, MapPin, Send, Settings2, Tractor } from "lucide-react";
+import { Component, ListChecks, Map, MapPin, Send, Settings2, Tractor } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
@@ -18,6 +18,11 @@ import { NavTertiary } from "./nav-tertiary";
 
 const data = {
     navMain: [
+        {
+            title: "Interactive",
+            url: "/interactive",
+            icon: Map,
+        },
         {
             title: "Inspections",
             url: "/inspections/history",
@@ -72,7 +77,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <Link href="/app">
+                            <Link href="/interactive">
                                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                                     <Send className="size-4" />
                                 </div>

@@ -1,10 +1,11 @@
-import * as React from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import * as React from "react";
+import { createFileRoute } from "@tanstack/react-router";
+import Header from "@/components/header";
 
-export const Route = createFileRoute('/_auth/inspections/reports')({
-  component: RouteComponent,
-})
+export const Route = createFileRoute("/_auth/inspections/reports")({
+    component: RouteComponent,
+});
 
 function RouteComponent() {
-  return 'Hello /_auth/inspections/reports!'
+    return <Header />;
 }

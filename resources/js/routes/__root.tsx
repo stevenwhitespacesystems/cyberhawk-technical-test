@@ -1,17 +1,17 @@
-import NotFound from '@/components/NotFound';
-import { Toaster } from '@/components/ui/toaster';
-import { createRootRoute, createRoute, Outlet } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import NotFound from "@/components/not-found";
+import { Toaster } from "@/components/ui/toaster";
+import { createRootRoute, Outlet } from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 export const Route = createRootRoute({
-  component: () => (
-    <>
-      <Toaster />
-      <Outlet />
-      <TanStackRouterDevtools />
-      <ReactQueryDevtools />
-  </>
+    component: () => (
+        <>
+            <Toaster />
+            <Outlet />
+            <TanStackRouterDevtools />
+            <ReactQueryDevtools />
+        </>
     ),
     notFoundComponent: NotFound,
 });

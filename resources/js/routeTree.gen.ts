@@ -17,9 +17,9 @@ import { Route as LoginImport } from "./routes/login";
 import { Route as AuthImport } from "./routes/_auth";
 import { Route as AuthSitesImport } from "./routes/_auth.sites";
 import { Route as AuthSettingsImport } from "./routes/_auth.settings";
+import { Route as AuthInteractiveImport } from "./routes/_auth.interactive";
 import { Route as AuthEquipmentImport } from "./routes/_auth.equipment";
 import { Route as AuthComponentsImport } from "./routes/_auth.components";
-import { Route as AuthAppImport } from "./routes/_auth.app";
 import { Route as AuthInspectionsReportsImport } from "./routes/_auth.inspections.reports";
 import { Route as AuthInspectionsHistoryImport } from "./routes/_auth.inspections.history";
 import { Route as AuthInspectionsCreateImport } from "./routes/_auth.inspections.create";
@@ -73,6 +73,12 @@ const AuthSettingsRoute = AuthSettingsImport.update({
     getParentRoute: () => AuthRoute,
 } as any);
 
+const AuthInteractiveRoute = AuthInteractiveImport.update({
+    id: "/interactive",
+    path: "/interactive",
+    getParentRoute: () => AuthRoute,
+} as any);
+
 const AuthEquipmentRoute = AuthEquipmentImport.update({
     id: "/equipment",
     path: "/equipment",
@@ -82,12 +88,6 @@ const AuthEquipmentRoute = AuthEquipmentImport.update({
 const AuthComponentsRoute = AuthComponentsImport.update({
     id: "/components",
     path: "/components",
-    getParentRoute: () => AuthRoute,
-} as any);
-
-const AuthAppRoute = AuthAppImport.update({
-    id: "/app",
-    path: "/app",
     getParentRoute: () => AuthRoute,
 } as any);
 
@@ -148,13 +148,6 @@ declare module "@tanstack/react-router" {
             preLoaderRoute: typeof RegisterLazyImport;
             parentRoute: typeof rootRoute;
         };
-        "/_auth/app": {
-            id: "/_auth/app";
-            path: "/app";
-            fullPath: "/app";
-            preLoaderRoute: typeof AuthAppImport;
-            parentRoute: typeof AuthImport;
-        };
         "/_auth/components": {
             id: "/_auth/components";
             path: "/components";
@@ -167,6 +160,13 @@ declare module "@tanstack/react-router" {
             path: "/equipment";
             fullPath: "/equipment";
             preLoaderRoute: typeof AuthEquipmentImport;
+            parentRoute: typeof AuthImport;
+        };
+        "/_auth/interactive": {
+            id: "/_auth/interactive";
+            path: "/interactive";
+            fullPath: "/interactive";
+            preLoaderRoute: typeof AuthInteractiveImport;
             parentRoute: typeof AuthImport;
         };
         "/_auth/settings": {
@@ -210,9 +210,9 @@ declare module "@tanstack/react-router" {
 // Create and export the route tree
 
 interface AuthRouteChildren {
-    AuthAppRoute: typeof AuthAppRoute;
     AuthComponentsRoute: typeof AuthComponentsRoute;
     AuthEquipmentRoute: typeof AuthEquipmentRoute;
+    AuthInteractiveRoute: typeof AuthInteractiveRoute;
     AuthSettingsRoute: typeof AuthSettingsRoute;
     AuthSitesRoute: typeof AuthSitesRoute;
     AuthInspectionsCreateRoute: typeof AuthInspectionsCreateRoute;
@@ -221,9 +221,9 @@ interface AuthRouteChildren {
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-    AuthAppRoute: AuthAppRoute,
     AuthComponentsRoute: AuthComponentsRoute,
     AuthEquipmentRoute: AuthEquipmentRoute,
+    AuthInteractiveRoute: AuthInteractiveRoute,
     AuthSettingsRoute: AuthSettingsRoute,
     AuthSitesRoute: AuthSitesRoute,
     AuthInspectionsCreateRoute: AuthInspectionsCreateRoute,
@@ -239,9 +239,9 @@ export interface FileRoutesByFullPath {
     "/login": typeof LoginRoute;
     "/about": typeof AboutLazyRoute;
     "/register": typeof RegisterLazyRoute;
-    "/app": typeof AuthAppRoute;
     "/components": typeof AuthComponentsRoute;
     "/equipment": typeof AuthEquipmentRoute;
+    "/interactive": typeof AuthInteractiveRoute;
     "/settings": typeof AuthSettingsRoute;
     "/sites": typeof AuthSitesRoute;
     "/inspections/create": typeof AuthInspectionsCreateRoute;
@@ -255,9 +255,9 @@ export interface FileRoutesByTo {
     "/login": typeof LoginRoute;
     "/about": typeof AboutLazyRoute;
     "/register": typeof RegisterLazyRoute;
-    "/app": typeof AuthAppRoute;
     "/components": typeof AuthComponentsRoute;
     "/equipment": typeof AuthEquipmentRoute;
+    "/interactive": typeof AuthInteractiveRoute;
     "/settings": typeof AuthSettingsRoute;
     "/sites": typeof AuthSitesRoute;
     "/inspections/create": typeof AuthInspectionsCreateRoute;
@@ -272,9 +272,9 @@ export interface FileRoutesById {
     "/login": typeof LoginRoute;
     "/about": typeof AboutLazyRoute;
     "/register": typeof RegisterLazyRoute;
-    "/_auth/app": typeof AuthAppRoute;
     "/_auth/components": typeof AuthComponentsRoute;
     "/_auth/equipment": typeof AuthEquipmentRoute;
+    "/_auth/interactive": typeof AuthInteractiveRoute;
     "/_auth/settings": typeof AuthSettingsRoute;
     "/_auth/sites": typeof AuthSitesRoute;
     "/_auth/inspections/create": typeof AuthInspectionsCreateRoute;
@@ -290,9 +290,9 @@ export interface FileRouteTypes {
         | "/login"
         | "/about"
         | "/register"
-        | "/app"
         | "/components"
         | "/equipment"
+        | "/interactive"
         | "/settings"
         | "/sites"
         | "/inspections/create"
@@ -305,9 +305,9 @@ export interface FileRouteTypes {
         | "/login"
         | "/about"
         | "/register"
-        | "/app"
         | "/components"
         | "/equipment"
+        | "/interactive"
         | "/settings"
         | "/sites"
         | "/inspections/create"
@@ -320,9 +320,9 @@ export interface FileRouteTypes {
         | "/login"
         | "/about"
         | "/register"
-        | "/_auth/app"
         | "/_auth/components"
         | "/_auth/equipment"
+        | "/_auth/interactive"
         | "/_auth/settings"
         | "/_auth/sites"
         | "/_auth/inspections/create"
@@ -370,9 +370,9 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth.tsx",
       "children": [
-        "/_auth/app",
         "/_auth/components",
         "/_auth/equipment",
+        "/_auth/interactive",
         "/_auth/settings",
         "/_auth/sites",
         "/_auth/inspections/create",
@@ -389,16 +389,16 @@ export const routeTree = rootRoute
     "/register": {
       "filePath": "register.lazy.tsx"
     },
-    "/_auth/app": {
-      "filePath": "_auth.app.tsx",
-      "parent": "/_auth"
-    },
     "/_auth/components": {
       "filePath": "_auth.components.tsx",
       "parent": "/_auth"
     },
     "/_auth/equipment": {
       "filePath": "_auth.equipment.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/interactive": {
+      "filePath": "_auth.interactive.tsx",
       "parent": "/_auth"
     },
     "/_auth/settings": {
