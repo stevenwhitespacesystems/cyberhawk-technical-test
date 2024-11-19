@@ -8,7 +8,7 @@ config
 database
 lang
 notes
-routes
+routes/*
 storage
 tests
 vendor
