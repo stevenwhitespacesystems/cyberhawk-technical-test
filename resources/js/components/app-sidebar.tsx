@@ -1,17 +1,5 @@
 import * as React from "react";
-import {
-    BookOpen,
-    Bot,
-    Command,
-    Frame,
-    LifeBuoy,
-    ListChecks,
-    Map,
-    PieChart,
-    Send,
-    Settings2,
-    SquareTerminal,
-} from "lucide-react";
+import { Component, ListChecks, MapPin, Send, Settings2, Tractor } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
 import { NavSecondary } from "@/components/nav-secondary";
@@ -25,23 +13,28 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Link } from "@tanstack/react-router";
 import { NavTertiary } from "./nav-tertiary";
 
 const data = {
     navMain: [
         {
             title: "Inspections",
-            url: "/inspections",
+            url: "/inspections/history",
             icon: ListChecks,
             isActive: true,
             items: [
+                {
+                    title: "Reports",
+                    url: "/inspections/reports",
+                },
                 {
                     title: "Create",
                     url: "/inspections/create",
                 },
                 {
                     title: "History",
-                    url: "/inspections",
+                    url: "/inspections/history",
                 },
             ],
         },
@@ -49,18 +42,18 @@ const data = {
     navSecondary: [
         {
             title: "Sites",
-            url: "#",
-            icon: Frame,
+            url: "/sites",
+            icon: MapPin,
         },
         {
             title: "Equipment",
-            url: "#",
-            icon: PieChart,
+            url: "/equipment",
+            icon: Tractor,
         },
         {
             title: "Components",
-            url: "#",
-            icon: Map,
+            url: "/components",
+            icon: Component,
         },
     ],
     navTertiary: [
@@ -79,14 +72,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
-                            <a href="/app">
+                            <Link href="/app">
                                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                                     <Send className="size-4" />
                                 </div>
                                 <div className="grid flex-1 text-left text-sm leading-tight">
                                     <span className="truncate font-semibold">Cyberhawk</span>
                                 </div>
-                            </a>
+                            </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>

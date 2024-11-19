@@ -150,16 +150,15 @@ export function NavUser() {
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                                 <AlertDialogHeader>
-                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                    <AlertDialogTitle>Logout</AlertDialogTitle>
                                     <AlertDialogDescription>
-                                        This action cannot be undone. This will permanently delete
-                                        your account and remove your data from our servers.
+                                        Are you sure you want to logout?
                                     </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                                     <AlertDialogAction onClick={() => mutation.mutate()}>
-                                        Continue
+                                        Logout
                                     </AlertDialogAction>
                                 </AlertDialogFooter>
                             </AlertDialogContent>
