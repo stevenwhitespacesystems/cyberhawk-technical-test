@@ -15,8 +15,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Route as rootRoute } from "./routes/__root";
 import { Route as LoginImport } from "./routes/login";
 import { Route as AuthImport } from "./routes/_auth";
-import { Route as AuthInspectionsImport } from "./routes/_auth.inspections";
+import { Route as AuthSitesImport } from "./routes/_auth.sites";
+import { Route as AuthSettingsImport } from "./routes/_auth.settings";
+import { Route as AuthEquipmentImport } from "./routes/_auth.equipment";
+import { Route as AuthComponentsImport } from "./routes/_auth.components";
 import { Route as AuthAppImport } from "./routes/_auth.app";
+import { Route as AuthInspectionsReportsImport } from "./routes/_auth.inspections.reports";
+import { Route as AuthInspectionsHistoryImport } from "./routes/_auth.inspections.history";
+import { Route as AuthInspectionsCreateImport } from "./routes/_auth.inspections.create";
 
 // Create Virtual Routes
 
@@ -55,15 +61,51 @@ const IndexLazyRoute = IndexLazyImport.update({
     getParentRoute: () => rootRoute,
 } as any).lazy(() => import("./routes/index.lazy").then((d) => d.Route));
 
-const AuthInspectionsRoute = AuthInspectionsImport.update({
-    id: "/inspections",
-    path: "/inspections",
+const AuthSitesRoute = AuthSitesImport.update({
+    id: "/sites",
+    path: "/sites",
+    getParentRoute: () => AuthRoute,
+} as any);
+
+const AuthSettingsRoute = AuthSettingsImport.update({
+    id: "/settings",
+    path: "/settings",
+    getParentRoute: () => AuthRoute,
+} as any);
+
+const AuthEquipmentRoute = AuthEquipmentImport.update({
+    id: "/equipment",
+    path: "/equipment",
+    getParentRoute: () => AuthRoute,
+} as any);
+
+const AuthComponentsRoute = AuthComponentsImport.update({
+    id: "/components",
+    path: "/components",
     getParentRoute: () => AuthRoute,
 } as any);
 
 const AuthAppRoute = AuthAppImport.update({
     id: "/app",
     path: "/app",
+    getParentRoute: () => AuthRoute,
+} as any);
+
+const AuthInspectionsReportsRoute = AuthInspectionsReportsImport.update({
+    id: "/inspections/reports",
+    path: "/inspections/reports",
+    getParentRoute: () => AuthRoute,
+} as any);
+
+const AuthInspectionsHistoryRoute = AuthInspectionsHistoryImport.update({
+    id: "/inspections/history",
+    path: "/inspections/history",
+    getParentRoute: () => AuthRoute,
+} as any);
+
+const AuthInspectionsCreateRoute = AuthInspectionsCreateImport.update({
+    id: "/inspections/create",
+    path: "/inspections/create",
     getParentRoute: () => AuthRoute,
 } as any);
 
@@ -113,11 +155,53 @@ declare module "@tanstack/react-router" {
             preLoaderRoute: typeof AuthAppImport;
             parentRoute: typeof AuthImport;
         };
-        "/_auth/inspections": {
-            id: "/_auth/inspections";
-            path: "/inspections";
-            fullPath: "/inspections";
-            preLoaderRoute: typeof AuthInspectionsImport;
+        "/_auth/components": {
+            id: "/_auth/components";
+            path: "/components";
+            fullPath: "/components";
+            preLoaderRoute: typeof AuthComponentsImport;
+            parentRoute: typeof AuthImport;
+        };
+        "/_auth/equipment": {
+            id: "/_auth/equipment";
+            path: "/equipment";
+            fullPath: "/equipment";
+            preLoaderRoute: typeof AuthEquipmentImport;
+            parentRoute: typeof AuthImport;
+        };
+        "/_auth/settings": {
+            id: "/_auth/settings";
+            path: "/settings";
+            fullPath: "/settings";
+            preLoaderRoute: typeof AuthSettingsImport;
+            parentRoute: typeof AuthImport;
+        };
+        "/_auth/sites": {
+            id: "/_auth/sites";
+            path: "/sites";
+            fullPath: "/sites";
+            preLoaderRoute: typeof AuthSitesImport;
+            parentRoute: typeof AuthImport;
+        };
+        "/_auth/inspections/create": {
+            id: "/_auth/inspections/create";
+            path: "/inspections/create";
+            fullPath: "/inspections/create";
+            preLoaderRoute: typeof AuthInspectionsCreateImport;
+            parentRoute: typeof AuthImport;
+        };
+        "/_auth/inspections/history": {
+            id: "/_auth/inspections/history";
+            path: "/inspections/history";
+            fullPath: "/inspections/history";
+            preLoaderRoute: typeof AuthInspectionsHistoryImport;
+            parentRoute: typeof AuthImport;
+        };
+        "/_auth/inspections/reports": {
+            id: "/_auth/inspections/reports";
+            path: "/inspections/reports";
+            fullPath: "/inspections/reports";
+            preLoaderRoute: typeof AuthInspectionsReportsImport;
             parentRoute: typeof AuthImport;
         };
     }
@@ -127,12 +211,24 @@ declare module "@tanstack/react-router" {
 
 interface AuthRouteChildren {
     AuthAppRoute: typeof AuthAppRoute;
-    AuthInspectionsRoute: typeof AuthInspectionsRoute;
+    AuthComponentsRoute: typeof AuthComponentsRoute;
+    AuthEquipmentRoute: typeof AuthEquipmentRoute;
+    AuthSettingsRoute: typeof AuthSettingsRoute;
+    AuthSitesRoute: typeof AuthSitesRoute;
+    AuthInspectionsCreateRoute: typeof AuthInspectionsCreateRoute;
+    AuthInspectionsHistoryRoute: typeof AuthInspectionsHistoryRoute;
+    AuthInspectionsReportsRoute: typeof AuthInspectionsReportsRoute;
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
     AuthAppRoute: AuthAppRoute,
-    AuthInspectionsRoute: AuthInspectionsRoute,
+    AuthComponentsRoute: AuthComponentsRoute,
+    AuthEquipmentRoute: AuthEquipmentRoute,
+    AuthSettingsRoute: AuthSettingsRoute,
+    AuthSitesRoute: AuthSitesRoute,
+    AuthInspectionsCreateRoute: AuthInspectionsCreateRoute,
+    AuthInspectionsHistoryRoute: AuthInspectionsHistoryRoute,
+    AuthInspectionsReportsRoute: AuthInspectionsReportsRoute,
 };
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren);
@@ -144,7 +240,13 @@ export interface FileRoutesByFullPath {
     "/about": typeof AboutLazyRoute;
     "/register": typeof RegisterLazyRoute;
     "/app": typeof AuthAppRoute;
-    "/inspections": typeof AuthInspectionsRoute;
+    "/components": typeof AuthComponentsRoute;
+    "/equipment": typeof AuthEquipmentRoute;
+    "/settings": typeof AuthSettingsRoute;
+    "/sites": typeof AuthSitesRoute;
+    "/inspections/create": typeof AuthInspectionsCreateRoute;
+    "/inspections/history": typeof AuthInspectionsHistoryRoute;
+    "/inspections/reports": typeof AuthInspectionsReportsRoute;
 }
 
 export interface FileRoutesByTo {
@@ -154,7 +256,13 @@ export interface FileRoutesByTo {
     "/about": typeof AboutLazyRoute;
     "/register": typeof RegisterLazyRoute;
     "/app": typeof AuthAppRoute;
-    "/inspections": typeof AuthInspectionsRoute;
+    "/components": typeof AuthComponentsRoute;
+    "/equipment": typeof AuthEquipmentRoute;
+    "/settings": typeof AuthSettingsRoute;
+    "/sites": typeof AuthSitesRoute;
+    "/inspections/create": typeof AuthInspectionsCreateRoute;
+    "/inspections/history": typeof AuthInspectionsHistoryRoute;
+    "/inspections/reports": typeof AuthInspectionsReportsRoute;
 }
 
 export interface FileRoutesById {
@@ -165,14 +273,46 @@ export interface FileRoutesById {
     "/about": typeof AboutLazyRoute;
     "/register": typeof RegisterLazyRoute;
     "/_auth/app": typeof AuthAppRoute;
-    "/_auth/inspections": typeof AuthInspectionsRoute;
+    "/_auth/components": typeof AuthComponentsRoute;
+    "/_auth/equipment": typeof AuthEquipmentRoute;
+    "/_auth/settings": typeof AuthSettingsRoute;
+    "/_auth/sites": typeof AuthSitesRoute;
+    "/_auth/inspections/create": typeof AuthInspectionsCreateRoute;
+    "/_auth/inspections/history": typeof AuthInspectionsHistoryRoute;
+    "/_auth/inspections/reports": typeof AuthInspectionsReportsRoute;
 }
 
 export interface FileRouteTypes {
     fileRoutesByFullPath: FileRoutesByFullPath;
-    fullPaths: "/" | "" | "/login" | "/about" | "/register" | "/app" | "/inspections";
+    fullPaths:
+        | "/"
+        | ""
+        | "/login"
+        | "/about"
+        | "/register"
+        | "/app"
+        | "/components"
+        | "/equipment"
+        | "/settings"
+        | "/sites"
+        | "/inspections/create"
+        | "/inspections/history"
+        | "/inspections/reports";
     fileRoutesByTo: FileRoutesByTo;
-    to: "/" | "" | "/login" | "/about" | "/register" | "/app" | "/inspections";
+    to:
+        | "/"
+        | ""
+        | "/login"
+        | "/about"
+        | "/register"
+        | "/app"
+        | "/components"
+        | "/equipment"
+        | "/settings"
+        | "/sites"
+        | "/inspections/create"
+        | "/inspections/history"
+        | "/inspections/reports";
     id:
         | "__root__"
         | "/"
@@ -181,7 +321,13 @@ export interface FileRouteTypes {
         | "/about"
         | "/register"
         | "/_auth/app"
-        | "/_auth/inspections";
+        | "/_auth/components"
+        | "/_auth/equipment"
+        | "/_auth/settings"
+        | "/_auth/sites"
+        | "/_auth/inspections/create"
+        | "/_auth/inspections/history"
+        | "/_auth/inspections/reports";
     fileRoutesById: FileRoutesById;
 }
 
@@ -225,7 +371,13 @@ export const routeTree = rootRoute
       "filePath": "_auth.tsx",
       "children": [
         "/_auth/app",
-        "/_auth/inspections"
+        "/_auth/components",
+        "/_auth/equipment",
+        "/_auth/settings",
+        "/_auth/sites",
+        "/_auth/inspections/create",
+        "/_auth/inspections/history",
+        "/_auth/inspections/reports"
       ]
     },
     "/login": {
@@ -241,8 +393,32 @@ export const routeTree = rootRoute
       "filePath": "_auth.app.tsx",
       "parent": "/_auth"
     },
-    "/_auth/inspections": {
-      "filePath": "_auth.inspections.tsx",
+    "/_auth/components": {
+      "filePath": "_auth.components.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/equipment": {
+      "filePath": "_auth.equipment.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/settings": {
+      "filePath": "_auth.settings.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/sites": {
+      "filePath": "_auth.sites.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/inspections/create": {
+      "filePath": "_auth.inspections.create.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/inspections/history": {
+      "filePath": "_auth.inspections.history.tsx",
+      "parent": "/_auth"
+    },
+    "/_auth/inspections/reports": {
+      "filePath": "_auth.inspections.reports.tsx",
       "parent": "/_auth"
     }
   }
