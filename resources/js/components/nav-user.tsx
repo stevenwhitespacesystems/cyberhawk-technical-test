@@ -48,7 +48,7 @@ export function NavUser() {
     const { toast } = useToast();
     const mutation = useMutation({
         mutationFn: async () => {
-            await axios.get("/api/logout");
+            await axios.get("/api/auth/logout");
         },
         onSuccess: () => {
             clearAuth();

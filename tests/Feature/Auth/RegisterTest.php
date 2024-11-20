@@ -12,13 +12,13 @@ class RegisterTest extends TestCase
 {
     public function test_incorrect_request_method(): void
     {
-        $response = $this->getJson('/api/register');
+        $response = $this->getJson('/api/auth/register');
         $response->assertStatus(Response::HTTP_METHOD_NOT_ALLOWED);
     }
 
     public function test_empty_request_body(): void
     {
-        $response = $this->postJson('/api/register');
+        $response = $this->postJson('/api/auth/register');
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
         $jsonResponse = json_decode($response->getContent(), true);
         $this->assertEquals('Validation errors', $jsonResponse['message']);
@@ -26,7 +26,7 @@ class RegisterTest extends TestCase
 
     public function test_failed_validation_on_name(): void
     {
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/auth/register', [
             'name' => '',
             'email' => 'test@test.com',
             'password' => 'password',
@@ -41,7 +41,7 @@ class RegisterTest extends TestCase
 
     public function test_failed_validation_on_email(): void
     {
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/auth/register', [
             'name' => 'Joe Bloggs',
             'email' => 'invalid-email',
             'password' => 'password',
@@ -56,7 +56,7 @@ class RegisterTest extends TestCase
 
     public function test_failed_validation_on_password(): void
     {
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/auth/register', [
             'name' => 'Joe Bloggs',
             'email' => 'test@test.com',
             'password' => '',
@@ -71,7 +71,7 @@ class RegisterTest extends TestCase
 
     public function test_failed_validation_on_password_confirmation(): void
     {
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/auth/register', [
             'name' => 'Joe Bloggs',
             'email' => 'test@test.com',
             'password' => 'password',
@@ -103,7 +103,7 @@ class RegisterTest extends TestCase
                 ->andReturn($responseDto);
         });
 
-        $response = $this->postJson('/api/register', [
+        $response = $this->postJson('/api/auth/register', [
             'name' => 'Joe Bloggs',
             'email' => 'test@test.com',
             'password' => 'password',

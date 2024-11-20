@@ -42,7 +42,7 @@ function Register() {
     const mutation = useMutation({
         mutationFn: async (data: RegisterFormType) => {
             await axios.get("/sanctum/csrf-cookie");
-            const response = await axios.post("/api/register", data);
+            const response = await axios.post("/api/auth/register", data);
             return response.data;
         },
         onSuccess: (data) => {

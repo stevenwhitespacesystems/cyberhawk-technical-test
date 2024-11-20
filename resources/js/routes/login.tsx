@@ -41,7 +41,7 @@ function Login() {
     const mutation = useMutation({
         mutationFn: async (data: LoginFormType) => {
             await axios.get("/sanctum/csrf-cookie");
-            const response = await axios.post("/api/login", data);
+            const response = await axios.post("/api/auth/login", data);
             return response.data;
         },
         onSuccess: (data) => {
