@@ -14,6 +14,7 @@ function Interactive() {
         mapInstanceRef.current = map;
         // TODO: Set the coords for the Sites
     }
+
     return (
         <>
             <Header />

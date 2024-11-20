@@ -49,6 +49,8 @@ function Register() {
             const { token, user } = data.data;
             setAuth(token, user);
 
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
             router.navigate({ to: "/interactive" });
         },
         onError: (error) => {
