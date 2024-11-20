@@ -14,9 +14,7 @@ class AllGeoJsonDataController extends Controller
     public function __invoke(SiteServiceContract $siteService): JsonResponse
     {
         $geoJsonData = $siteService->allGeoJsonDataOnly();
-
-        // TODO: We have an extra key layering here and need to fix it.
         // TODO: Test for this controller.
-        return ApiResponses::success(['sites' => $geoJsonData]);
+        return ApiResponses::success(['geo_json' => $geoJsonData]);
     }
 }
