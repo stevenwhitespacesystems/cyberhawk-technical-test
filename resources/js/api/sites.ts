@@ -1,14 +1,7 @@
 import { toast } from "@/hooks/use-toast";
 import axios from "axios";
 
-type FetchSitesGeoJsonResponse = {
-    success: boolean;
-    data: {
-        geo_json: GeoJSON.FeatureCollection;
-    };
-};
-
-export async function fetchSitesGeoJson(): Promise<FetchSitesGeoJsonResponse> {
+export async function fetchSitesGeoJson(): Promise<GeoJSON.FeatureCollection> {
     const response = await axios.get("/api/sites/all-geo-json");
     if (response.status !== 200) {
         toast({
@@ -19,5 +12,5 @@ export async function fetchSitesGeoJson(): Promise<FetchSitesGeoJsonResponse> {
         throw new Error("Failed to GeoJson data.");
     }
 
-    return response.data;
+    return response.data.data.geo_json;
 }

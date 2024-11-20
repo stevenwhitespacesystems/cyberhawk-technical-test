@@ -1,6 +1,8 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
 import { useEffect, useRef, useState } from "react";
+import { useSitesGeojsonData } from "@/hooks/use-sites-geojson-data";
+import Marker from "@/components/marker";
 
 type MapProps = {
     onLoad: (map: mapboxgl.Map) => void;
@@ -12,11 +14,13 @@ const INITIAL_ZOOM = 5.2;
 
 function Map({ onLoad }: MapProps) {
     const mapContainerRef = useRef<HTMLDivElement>(null);
-    // let mapRef = useRef<mapboxgl.Map | null>(null);
+    const mapRef = useRef<mapboxgl.Map | null>(null);
 
     const [center] = useState<mapboxgl.LngLatLike>(INITIAL_CENTER);
     const [zoom] = useState<number>(INITIAL_ZOOM);
     const [mapLoaded, setMapLoaded] = useState<boolean>(false);
+
+    const { data } = useSitesGeojsonData();
 
     useEffect(() => {
         if (mapContainerRef.current) {
@@ -34,6 +38,8 @@ function Map({ onLoad }: MapProps) {
                 setMapLoaded(true);
             });
 
+            mapRef.current = map;
+
             return () => map.remove();
         }
 
@@ -47,7 +53,15 @@ function Map({ onLoad }: MapProps) {
                 className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min"
                 ref={mapContainerRef}
             />
-            {mapLoaded && "data-loaded"}
+            {mapLoaded &&
+                data &&
+                data.features.map((feature, i) => (
+                    <Marker
+                        key={feature.properties?.id ?? i}
+                        feature={feature}
+                        map={mapRef.current}
+                    />
+                ))}
         </>
     );
 }
