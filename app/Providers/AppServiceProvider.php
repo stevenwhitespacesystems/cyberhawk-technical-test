@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Contracts\Services\SiteServiceContract;
+use App\Services\SiteService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,9 +13,9 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
+        $this->app->bind(SiteServiceContract::class, SiteService::class);
     }
 
     /**

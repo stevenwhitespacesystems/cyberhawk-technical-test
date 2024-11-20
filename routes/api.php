@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Site\AllGeoJsonDataController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,4 +24,7 @@ Route::post('/register', RegisterController::class);
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::get('/logout', LogoutController::class);
+    Route::group(['prefix' => 'sites'], static function () {
+        Route::get('/all-geo-json', AllGeoJsonDataController::class);
+    });
 });
