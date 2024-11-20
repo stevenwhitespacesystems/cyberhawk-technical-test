@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Contracts\Services;
 
-use App\DTO\LoginRequestDTO;
-use App\DTO\LoginResponseDTO;
-use App\DTO\RegisterRequestDTO;
-use App\DTO\RegisterResponseDTO;
+use App\DTO\Auth\LoginRequestDTO;
+use App\DTO\Auth\LoginResponseDTO;
+use App\DTO\Auth\RegisterRequestDTO;
+use App\DTO\Auth\RegisterResponseDTO;
 
 interface AuthServiceContract
 {

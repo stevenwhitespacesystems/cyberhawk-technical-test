@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Contracts\Services\AuthServiceContract;
-use App\DTO\RegisterRequestDTO;
+use App\DTO\Auth\RegisterRequestDTO;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Responses\ApiResponses;

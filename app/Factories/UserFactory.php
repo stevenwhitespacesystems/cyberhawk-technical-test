@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Factories;
 
 use App\Base\Factory;
-use App\DTO\RegisterRequestDTO;
+use App\DTO\Auth\RegisterRequestDTO;
 use App\Models\User;
 
 /**

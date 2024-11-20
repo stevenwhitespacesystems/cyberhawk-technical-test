@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Contracts\Services\AuthServiceContract;
-use App\DTO\LoginRequestDTO;
-use App\DTO\LoginResponseDTO;
-use App\DTO\RegisterRequestDTO;
-use App\DTO\RegisterResponseDTO;
+use App\DTO\Auth\LoginRequestDTO;
+use App\DTO\Auth\LoginResponseDTO;
+use App\DTO\Auth\RegisterRequestDTO;
+use App\DTO\Auth\RegisterResponseDTO;
 use App\Exceptions\BadUserCredentialsException;
 use App\Factories\UserFactory;
 use App\Models\User;

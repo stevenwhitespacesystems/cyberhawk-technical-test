@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Contracts\Services\AuthServiceContract;
-use App\DTO\LoginRequestDTO;
+use App\DTO\Auth\LoginRequestDTO;
 use App\Exceptions\BadUserCredentialsException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
