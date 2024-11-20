@@ -1,7 +1,6 @@
 import Header from "@/components/header";
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
-import mapboxgl from "mapbox-gl";
+import { useRef } from "react";
 import Map from "@/components/map";
 
 export const Route = createFileRoute("/_auth/interactive")({
