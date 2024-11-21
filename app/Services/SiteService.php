@@ -9,6 +9,7 @@ use App\DTO\GeoJSON\FeatureDTO;
 use App\DTO\GeoJSON\GeoJsonDTO;
 use App\Models\Site;
 use App\Repositories\SiteRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 
 final class SiteService implements SiteServiceContract
@@ -31,4 +32,13 @@ final class SiteService implements SiteServiceContract
 
         return new GeoJsonDTO($features);
     }
+
+    // TODO: Start work on method that will search the sites table
+    // /**
+    //  * @return Collection<Site>
+    //  */
+    // final public function tableData(Request $request): Collection
+    // {
+    //     $query = $this->siteRepository->createQueryBuilder();
+    // }
 }
