@@ -6,7 +6,7 @@ namespace App\Models;
 
 use App\DTO\GeoJSON\FeatureDTO;
 use App\DTO\GeoJSON\GeometryDTO;
-use App\DTO\GeoJSON\PropertiesDTO;
+use App\DTO\GeoJSON\SitePropertiesDTO;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,7 +34,7 @@ class Site extends Model
         return Attribute::make(
             get: static function (mixed $value, array $attributes): FeatureDTO {
                 return new FeatureDTO(
-                    properties: new PropertiesDTO($attributes['id'], $attributes['name']),
+                    properties: new SitePropertiesDTO($attributes['id'], $attributes['name']),
                     geometry: new GeometryDTO(
                         type: 'Point',
                         coordinates: [

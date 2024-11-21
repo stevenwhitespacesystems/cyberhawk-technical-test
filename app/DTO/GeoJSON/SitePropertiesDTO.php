@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\DTO\GeoJSON;
 
-final class PropertiesDTO
+use App\Contracts\DTO\PropertiesDTOContract;
+
+final class SitePropertiesDTO implements PropertiesDTOContract
 {
     public function __construct(
         public readonly string $id,

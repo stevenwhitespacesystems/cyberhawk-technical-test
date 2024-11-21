@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\DTO\GeoJSON\EquipmentPropertiesDTO;
 use App\DTO\GeoJSON\FeatureDTO;
 use App\DTO\GeoJSON\GeometryDTO;
-use App\DTO\GeoJSON\PropertiesDTO;
 use App\Enums\EquipmentType;
 use App\Enums\InspectionStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -19,6 +19,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @property string $id
  * @property string $nickname
+ * @property string $serial_number
+ * @property InspectionStatus $status
+ * @property EquipmentType $type
  * @property float $longitude
  * @property float $latitude
  */
@@ -40,7 +43,13 @@ class Equipment extends Model
         return Attribute::make(
             get: static function (mixed $value, array $attributes): FeatureDTO {
                 return new FeatureDTO(
-                    properties: new PropertiesDTO($attributes['id'], $attributes['nickname']),
+                    properties: new EquipmentPropertiesDTO(
+                        $attributes['id'],
+                        $attributes['nickname'],
+                        $attributes['serial_number'],
+                        InspectionStatus::from($attributes['status']),
+                        EquipmentType::from($attributes['type'])
+                    ),
                     geometry: new GeometryDTO(
                         type: 'Point',
                         coordinates: [

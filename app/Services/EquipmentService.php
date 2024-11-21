@@ -20,12 +20,22 @@ final class EquipmentService implements EquipmentServiceContract
 
     final public function allGeoJsonDataOnly(): GeoJsonDTO
     {
+        $fields = [
+            'id',
+            'nickname',
+            'longitude',
+            'latitude',
+            'serial_number',
+            'status',
+            'type',
+        ];
+
         /** @var Collection<Equipment> $equipment */
-        $equipment = $this->equipmentRepository->findBy([], ['id', 'nickname', 'longitude', 'latitude']);
+        $equipment = $this->equipmentRepository->findBy([], $fields);
 
         /** @var Collection<FeatureDTO> $features */
-        $features = $equipment->map(static function (Equipment $equipment) {
-            return $equipment->makeHidden(['id', 'nickname', 'longitude', 'latitude'])->append('feature');
+        $features = $equipment->map(static function (Equipment $equipment) use ($fields) {
+            return $equipment->makeHidden($fields)->append('feature');
         })
             ->pluck('feature');
 
