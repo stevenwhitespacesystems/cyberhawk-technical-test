@@ -6,7 +6,7 @@ use App\Contracts\Services\SiteServiceContract;
 use App\DTO\GeoJSON\FeatureDTO;
 use App\DTO\GeoJSON\GeoJsonDTO;
 use App\DTO\GeoJSON\GeometryDTO;
-use App\DTO\GeoJSON\PropertiesDTO;
+use App\DTO\GeoJSON\SitePropertiesDTO;
 use App\Models\Site;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -34,7 +34,7 @@ class AllGeoJsonTest extends TestCase
         $site->latitude = 1.0;
 
         $featureDto = new FeatureDTO(
-            properties: new PropertiesDTO($site->id, $site->name),
+            properties: new SitePropertiesDTO($site->id, $site->name),
             geometry: new GeometryDTO(
                 type: 'Point',
                 coordinates: [

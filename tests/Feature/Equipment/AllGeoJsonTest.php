@@ -3,10 +3,12 @@
 namespace Tests\Feature\Equipment;
 
 use App\Contracts\Services\EquipmentServiceContract;
+use App\DTO\GeoJSON\EquipmentPropertiesDTO;
 use App\DTO\GeoJSON\FeatureDTO;
 use App\DTO\GeoJSON\GeoJsonDTO;
 use App\DTO\GeoJSON\GeometryDTO;
-use App\DTO\GeoJSON\PropertiesDTO;
+use App\Enums\EquipmentType;
+use App\Enums\InspectionStatus;
 use App\Models\Equipment;
 use App\Models\User;
 use Illuminate\Support\Str;
@@ -30,11 +32,20 @@ class AllGeoJsonTest extends TestCase
         $equipment = new Equipment();
         $equipment->id = $id;
         $equipment->nickname = 'test';
+        $equipment->serial_number = 'test';
+        $equipment->status = InspectionStatus::OK;
+        $equipment->type = EquipmentType::WIND_TURBINE;
         $equipment->longitude = 1.0;
         $equipment->latitude = 1.0;
 
         $featureDto = new FeatureDTO(
-            properties: new PropertiesDTO($equipment->id, $equipment->nickname),
+            properties: new EquipmentPropertiesDTO(
+                $equipment->id,
+                $equipment->nickname,
+                $equipment->serial_number,
+                $equipment->status,
+                $equipment->type
+            ),
             geometry: new GeometryDTO(
                 type: 'Point',
                 coordinates: [
