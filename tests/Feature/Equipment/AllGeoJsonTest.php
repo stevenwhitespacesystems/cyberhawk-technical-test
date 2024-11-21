@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Feature\Site;
+namespace Tests\Feature\Equipment;
 
-use App\Contracts\Services\SiteServiceContract;
+use App\Contracts\Services\EquipmentServiceContract;
 use App\DTO\GeoJSON\FeatureDTO;
 use App\DTO\GeoJSON\GeoJsonDTO;
 use App\DTO\GeoJSON\GeometryDTO;
 use App\DTO\GeoJSON\PropertiesDTO;
-use App\Models\Site;
+use App\Models\Equipment;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\Sanctum;
@@ -18,7 +18,7 @@ class AllGeoJsonTest extends TestCase
 {
     public function test_route_is_authenticated(): void
     {
-        $response = $this->getJson('/api/sites/all-geo-json');
+        $response = $this->getJson('/api/equipment/all-geo-json');
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
@@ -27,19 +27,19 @@ class AllGeoJsonTest extends TestCase
     {
         $id = Str::ulid();
 
-        $site = new Site();
-        $site->id = $id;
-        $site->name = 'test';
-        $site->longitude = 1.0;
-        $site->latitude = 1.0;
+        $equipment = new Equipment();
+        $equipment->id = $id;
+        $equipment->nickname = 'test';
+        $equipment->longitude = 1.0;
+        $equipment->latitude = 1.0;
 
         $featureDto = new FeatureDTO(
-            properties: new PropertiesDTO($site->id, $site->name),
+            properties: new PropertiesDTO($equipment->id, $equipment->nickname),
             geometry: new GeometryDTO(
                 type: 'Point',
                 coordinates: [
-                    $site->longitude,
-                    $site->latitude,
+                    $equipment->longitude,
+                    $equipment->latitude,
                 ]
             )
         );
@@ -48,7 +48,7 @@ class AllGeoJsonTest extends TestCase
             features: collect()->add($featureDto)
         );
 
-        $this->mock(SiteServiceContract::class, function ($mock) use ($geoJsonDto) {
+        $this->mock(EquipmentServiceContract::class, function ($mock) use ($geoJsonDto) {
             $mock->shouldReceive('allGeoJsonDataOnly')
                 ->once()
                 ->andReturn($geoJsonDto);
@@ -57,7 +57,7 @@ class AllGeoJsonTest extends TestCase
         $user = User::factory()->create();
         Sanctum::actingAs($user);
 
-        $response = $this->getJson('/api/sites/all-geo-json');
+        $response = $this->getJson('/api/equipment/all-geo-json');
 
         $response->assertStatus(Response::HTTP_OK);
         $jsonResponse = json_decode($response->getContent(), true);
