@@ -149,12 +149,11 @@ function Map({ onLoad }: MapProps) {
 
                         const popupNode = document.createElement("div");
                         const popupRoot = createRoot(popupNode);
-                        popupRoot.render(<EquipmentPopup />);
+                        popupRoot.render(<EquipmentPopup equipment={equipment.properties} />);
 
                         popupRef.current = new mapboxgl.Popup({
-                            closeButton: true,
-                            closeOnClick: false,
-                            maxWidth: "350px",
+                            closeButton: false,
+                            closeOnClick: true,
                         })
                             .setLngLat(coordinates)
                             .setDOMContent(popupNode)
