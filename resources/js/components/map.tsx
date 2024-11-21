@@ -34,6 +34,35 @@ function Map({ onLoad }: MapProps) {
             map.addControl(new mapboxgl.NavigationControl());
 
             map.on("load", () => {
+                if (data) {
+                    map.addSource("sites", {
+                        type: "geojson",
+                        data,
+                    });
+
+                    map.addLayer({
+                        id: "sites-layer",
+                        type: "symbol",
+                        source: "sites",
+                        minzoom: 5,
+                        maxzoom: 10,
+                        layout: {
+                            "icon-image": "sites",
+                            "icon-size": 1.5,
+                            "icon-allow-overlap": true,
+                            "text-field": ["get", "name"],
+                            "text-offset": [0, 1.5],
+                            "text-anchor": "top",
+                        },
+                    });
+
+                    map.loadImage("/public/site.png", (error, image) => {
+                        if (error) throw error;
+                        if (image && !map.hasImage("sites")) {
+                            map.addImage("sites", image, { pixelRatio: 2 });
+                        }
+                    });
+                }
                 onLoad(map);
                 setMapLoaded(true);
             });
@@ -45,7 +74,7 @@ function Map({ onLoad }: MapProps) {
 
         return () => {};
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [data]);
 
     return (
         <>
@@ -53,7 +82,7 @@ function Map({ onLoad }: MapProps) {
                 className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min"
                 ref={mapContainerRef}
             />
-            {mapLoaded &&
+            {/* {mapLoaded &&
                 data &&
                 data.features.map((feature, i) => (
                     <Marker
@@ -61,7 +90,7 @@ function Map({ onLoad }: MapProps) {
                         feature={feature}
                         map={mapRef.current}
                     />
-                ))}
+                ))} */}
         </>
     );
 }
