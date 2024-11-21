@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string $id
+ * @property string $name
  * @property float $latitude
  * @property float $longitude
  */
@@ -33,7 +34,7 @@ class Site extends Model
         return Attribute::make(
             get: static function (mixed $value, array $attributes): FeatureDTO {
                 return new FeatureDTO(
-                    properties: new PropertiesDTO($attributes['id']),
+                    properties: new PropertiesDTO($attributes['id'], $attributes['name']),
                     geometry: new GeometryDTO(
                         type: 'Point',
                         coordinates: [

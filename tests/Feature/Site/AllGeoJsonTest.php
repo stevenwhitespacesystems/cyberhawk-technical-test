@@ -33,7 +33,7 @@ class AllGeoJsonTest extends TestCase
         $site->latitude = 1.0;
 
         $featureDto = new FeatureDTO(
-            properties: new PropertiesDTO($site->id),
+            properties: new PropertiesDTO($site->id, $site->name),
             geometry: new GeometryDTO(
                 type: 'Point',
                 coordinates: [

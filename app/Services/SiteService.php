@@ -21,11 +21,11 @@ final class SiteService implements SiteServiceContract
     final public function allGeoJsonDataOnly(): GeoJsonDTO
     {
         /** @var Collection<Site> $sites */
-        $sites = $this->siteRepository->findBy([], ['id', 'longitude', 'latitude']);
+        $sites = $this->siteRepository->findBy([], ['id', 'name', 'longitude', 'latitude']);
 
         /** @var Collection<FeatureDTO> $features */
         $features = $sites->map(static function (Site $site) {
-            return $site->makeHidden(['id', 'longitude', 'latitude'])->append('feature');
+            return $site->makeHidden(['id', 'name', 'longitude', 'latitude'])->append('feature');
         })
             ->pluck('feature');
 
