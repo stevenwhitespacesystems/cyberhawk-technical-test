@@ -45,7 +45,8 @@ final class SiteService implements SiteServiceContract
         if ($request->has('sort')) {
             $sortParams = json_decode($request->get('sort'), true) ?? [];
             foreach ($sortParams as $sortParam) {
-                $direction = $sortParam['direction'] ?? 'asc';
+                $desc = $sortParam['desc'] ?? false;
+                $direction = $desc ? 'desc' : 'asc';
                 $query->orderBy($sortParam['id'], $direction);
             }
         }
