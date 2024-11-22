@@ -1,5 +1,6 @@
 import { toast } from "@/hooks/use-toast";
 import { columns, Site } from "@/tables/sites/columns";
+import { ColumnFiltersState, SortingState } from "@tanstack/react-table";
 import axios from "axios";
 
 export async function fetchSitesGeoJson(): Promise<GeoJSON.FeatureCollection> {
@@ -16,6 +17,10 @@ export async function fetchSitesGeoJson(): Promise<GeoJSON.FeatureCollection> {
     return response.data.data.geo_json;
 }
 
+type Props = {
+    sorting: SortingState;
+    columnFilters: ColumnFiltersState;
+};
 type TableDataResponse<T> = {
     data: Array<T>;
     meta: {
@@ -26,9 +31,22 @@ type TableDataResponse<T> = {
     };
 };
 
-export async function fetchSitesForTable(): Promise<TableDataResponse<Site>> {
+export async function fetchSitesForTable({
+    sorting,
+    columnFilters,
+}: Props): Promise<TableDataResponse<Site>> {
     const columnsForTable = columns.map((column) => column.id);
-    const response = await axios.post("/api/sites/table-data", {
+    const params = new URLSearchParams();
+    if (sorting.length) {
+        params.append("sort", JSON.stringify(sorting));
+    }
+
+    if (columnFilters.length) {
+        params.append("filters", JSON.stringify(columnFilters));
+    }
+
+    const queryParams = params.toString() !== "" ? `?${params.toString()}` : "";
+    const response = await axios.post(`/api/sites/table-data${queryParams}`, {
         columns: columnsForTable,
     });
 

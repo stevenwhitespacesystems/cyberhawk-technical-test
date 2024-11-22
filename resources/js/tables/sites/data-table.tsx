@@ -1,4 +1,13 @@
-import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import {
+    Column,
+    ColumnDef,
+    ColumnFiltersState,
+    flexRender,
+    getCoreRowModel,
+    OnChangeFn,
+    SortingState,
+    useReactTable,
+} from "@tanstack/react-table";
 
 import {
     Table,
@@ -8,17 +17,37 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import Filter from "@/tables/sites/filter";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
+    sorting: SortingState;
+    setSorting: OnChangeFn<SortingState>;
+    columnFilters: ColumnFiltersState;
+    setColumnFilters: OnChangeFn<ColumnFiltersState>;
 }
 
-export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+    columns,
+    data,
+    sorting,
+    setSorting,
+    columnFilters,
+    setColumnFilters,
+}: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
+        manualSorting: true,
+        manualFiltering: true,
+        state: {
+            columnFilters,
+            sorting,
+        },
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
     });
 
     return (
@@ -26,18 +55,31 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
             <Table>
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
-                        <TableRow key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => (
-                                <TableHead key={header.id}>
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                              header.column.columnDef.header,
-                                              header.getContext()
-                                          )}
-                                </TableHead>
-                            ))}
-                        </TableRow>
+                        <>
+                            <TableRow key={headerGroup.id}>
+                                {headerGroup.headers.map((header) => (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                  header.column.columnDef.header,
+                                                  header.getContext()
+                                              )}
+                                    </TableHead>
+                                ))}
+                            </TableRow>
+                            <TableRow key="filters">
+                                {headerGroup.headers.map((header) => (
+                                    <TableHead key={header.id}>
+                                        {header.column.getCanFilter() ? (
+                                            <Filter
+                                                column={header.column as Column<unknown, unknown>}
+                                            />
+                                        ) : null}
+                                    </TableHead>
+                                ))}
+                            </TableRow>
+                        </>
                     ))}
                 </TableHeader>
                 <TableBody>
