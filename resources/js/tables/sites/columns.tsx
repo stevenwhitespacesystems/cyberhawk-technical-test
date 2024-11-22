@@ -8,11 +8,13 @@ export type Site = {
 
 export const columns: ColumnDef<Site>[] = [
     {
-        accessorKey: "name",
+        id: "name",
         header: "Name",
+        accessorKey: "name",
     },
     {
-        accessorKey: "short_identifier",
+        id: "short_identifier",
         header: "SID",
+        accessorKey: "short_identifier",
     },
 ];
