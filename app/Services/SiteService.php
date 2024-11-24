@@ -11,12 +11,14 @@ use App\DTO\Table\TableDataDTO;
 use App\Http\Requests\Table\TableRequest;
 use App\Models\Site;
 use App\Repositories\SiteRepository;
+use Illuminate\Cache\Repository as CacheRepository;
 use Illuminate\Support\Collection;
 
 final class SiteService implements SiteServiceContract
 {
     public function __construct(
         private readonly SiteRepository $siteRepository,
+        private readonly CacheRepository $cache
     ) {
     }
 
@@ -36,7 +38,7 @@ final class SiteService implements SiteServiceContract
 
     final public function getTableData(TableRequest $request): TableDataDTO
     {
-        $tableService = new TableService($this->siteRepository);
+        $tableService = new TableService($this->siteRepository, $this->cache);
         return $tableService->getData($request);
     }
 }

@@ -11,12 +11,14 @@ use App\DTO\Table\TableDataDTO;
 use App\Http\Requests\Table\TableRequest;
 use App\Models\Equipment;
 use App\Repositories\EquipmentRepository;
+use Illuminate\Cache\Repository as CacheRepository;
 use Illuminate\Support\Collection;
 
 final class EquipmentService implements EquipmentServiceContract
 {
     public function __construct(
         private readonly EquipmentRepository $equipmentRepository,
+        private readonly CacheRepository $cache
     ) {
     }
 
@@ -46,7 +48,7 @@ final class EquipmentService implements EquipmentServiceContract
 
     final public function getTableData(TableRequest $request): TableDataDTO
     {
-        $tableService = new TableService($this->equipmentRepository);
+        $tableService = new TableService($this->equipmentRepository, $this->cache);
         return $tableService->getData($request);
     }
 }

@@ -15,6 +15,8 @@ use Illuminate\Support\Collection;
  */
 interface Repository
 {
+    public function getModelClass(): string;
+    
     public function createQueryBuilder(): Builder;
 
     /**

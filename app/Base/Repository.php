@@ -27,6 +27,11 @@ class Repository implements RepositoryInterface
         $this->modelClass = $modelClass;
     }
 
+    public function getModelClass(): string
+    {
+        return $this->modelClass;
+    }
+
     public function createQueryBuilder(): Builder
     {
         return forward_static_call([$this->modelClass, 'query']);
