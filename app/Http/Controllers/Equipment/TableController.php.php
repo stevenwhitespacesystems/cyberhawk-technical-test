@@ -15,7 +15,7 @@ class TableController extends Controller
         TableRequest $request,
         SiteServiceContract $siteService
     ) {
-        $tableData = $siteService->getTableData($request);
+        $tableData = $siteService->tableData($request);
 
         return ApiResponses::success(['table_data' => $tableData]);
     }

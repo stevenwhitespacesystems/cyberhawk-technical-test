@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DTO\TableData;
+namespace App\DTO\Table;
 
 final class TableMetaDTO
 {
