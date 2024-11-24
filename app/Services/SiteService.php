@@ -37,11 +37,11 @@ final class SiteService implements SiteServiceContract
 
     final public function tableData(TableRequest $request): TableDataDTO
     {
-        $page = $request->get('page', 1);
-        $pageSize = $request->get('pageSize', 10);
-
+        $pageSize = (int) $request->get('pageSize', 10);
+        $columns = array_merge(['id'], $request->get('columns', []));
+        
         $query = $this->siteRepository->createQueryBuilder();
-
+        
         if ($request->has('sort')) {
             $sortParams = json_decode($request->get('sort'), true) ?? [];
             foreach ($sortParams as $sortParam) {
@@ -50,13 +50,19 @@ final class SiteService implements SiteServiceContract
                 $query->orderBy($sortParam['id'], $direction);
             }
         }
-
+        
+        $hasFilters = false;
         if ($request->has('filters')) {
             $filterParams = json_decode($request->get('filters'), true) ?? [];
+
+            if (!empty($filterParams)) {
+                $hasFilters = true;
+            }
+
             foreach ($filterParams as $filterParam) {
                 $id = $filterParam['id'];
                 $value = $filterParam['value'];
-
+                
                 switch ($filterParam['type'] ?? 'text') {
                     case 'text':
                         $query->where($id, 'like', "%{$value}%");
@@ -75,7 +81,7 @@ final class SiteService implements SiteServiceContract
                             $query->where($id, '<=', $value['max']);
                         }
                         break;
-
+                                    
                     case 'date':
                         if (isset($value['from'])) {
                             $query->whereDate($id, '>=', $value['from']);
@@ -87,13 +93,15 @@ final class SiteService implements SiteServiceContract
                 }
             }
         }
-
+                            
+        $page = $hasFilters ? 1 : (int) $request->get('page', 1);
         $total = $query->count();
+
         /** @var Collection<Site> $result */
         $result = $query
             ->skip(($page - 1) * $pageSize)
             ->limit($pageSize)
-            ->get($request->get('columns'));
+            ->get($columns);
 
         $tableMeta = new TableMetaDTO($page, $pageSize, $total, (int) ceil($total / $pageSize));
 
