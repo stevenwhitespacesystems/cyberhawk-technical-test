@@ -7,6 +7,8 @@ namespace App\Services;
 use App\Contracts\Services\EquipmentServiceContract;
 use App\DTO\GeoJSON\FeatureDTO;
 use App\DTO\GeoJSON\GeoJsonDTO;
+use App\DTO\Table\TableDataDTO;
+use App\Http\Requests\Table\TableRequest;
 use App\Models\Equipment;
 use App\Repositories\EquipmentRepository;
 use Illuminate\Support\Collection;
@@ -40,5 +42,11 @@ final class EquipmentService implements EquipmentServiceContract
             ->pluck('feature');
 
         return new GeoJsonDTO($features);
+    }
+
+    final public function getTableData(TableRequest $request): TableDataDTO
+    {
+        $tableService = new TableService($this->equipmentRepository);
+        return $tableService->getData($request);
     }
 }
