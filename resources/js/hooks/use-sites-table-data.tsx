@@ -1,16 +1,12 @@
 import { fetchSitesForTable } from "@/api/sites";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/react-table";
+import { UseModelTableDataProps, useTableData } from "@/hooks/use-table-data";
 
-type Props = {
-    sorting: SortingState;
-    columnFilters: ColumnFiltersState;
-    pagination: PaginationState;
-};
-export function useSitesTableData({ sorting, columnFilters, pagination }: Props) {
-    return useQuery({
-        queryKey: ["sites-table-data", sorting, columnFilters, pagination],
+export function useSitesTableData({ sorting, columnFilters, pagination }: UseModelTableDataProps) {
+    return useTableData({
+        queryKey: "sites",
         queryFn: () => fetchSitesForTable({ sorting, columnFilters, pagination }),
-        placeholderData: keepPreviousData,
+        sorting,
+        columnFilters,
+        pagination,
     });
 }

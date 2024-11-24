@@ -18,7 +18,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import Filter from "@/tables/sites/filter";
+import Filter from "@/tables/root/filter";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {

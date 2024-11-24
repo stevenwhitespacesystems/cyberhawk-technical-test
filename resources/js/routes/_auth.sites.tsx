@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Header from "@/components/header";
-import { DataTable } from "@/tables/sites/data-table";
+import { DataTable } from "@/tables/root/data-table";
 import { columns } from "@/tables/sites/columns";
 import { useSitesTableData } from "@/hooks/use-sites-table-data";
 import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/react-table";
