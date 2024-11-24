@@ -41,6 +41,7 @@ function Filter({ column }: Props) {
     const columnFilterValue = column.getFilterValue();
     const { filterVariant } = (column.columnDef.meta as CustomColumnMeta) ?? {};
 
+    // TODO: Add date filter
     const filterMap: { [key: string]: JSX.Element } = {
         text: (
             <DebouncedInput
