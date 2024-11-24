@@ -2,9 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import Header from "@/components/header";
 import { DataTable } from "@/tables/root/data-table";
 import { columns } from "@/tables/sites/columns";
-import { useSitesTableData } from "@/hooks/use-sites-table-data";
 import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/react-table";
 import { useState } from "react";
+import { useTableData } from "@/hooks/use-table-data";
+import { fetchDataForTable } from "@/api/table";
 
 export const Route = createFileRoute("/_auth/sites")({
     component: RouteComponent,
@@ -17,7 +18,16 @@ function RouteComponent() {
         pageIndex: 0,
         pageSize: 10,
     });
-    const { data: tableData } = useSitesTableData({ sorting, columnFilters, pagination });
+
+    const queryFn = () =>
+        fetchDataForTable({ model: "sites", columns, sorting, columnFilters, pagination });
+    const { data: tableData } = useTableData({
+        queryKey: "sites",
+        queryFn,
+        sorting,
+        columnFilters,
+        pagination,
+    });
 
     return (
         <>
