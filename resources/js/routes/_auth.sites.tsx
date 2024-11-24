@@ -3,7 +3,7 @@ import Header from "@/components/header";
 import { DataTable } from "@/tables/sites/data-table";
 import { columns } from "@/tables/sites/columns";
 import { useSitesTableData } from "@/hooks/use-sites-table-data";
-import { ColumnFiltersState, SortingState } from "@tanstack/react-table";
+import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/react-table";
 import { useState } from "react";
 
 export const Route = createFileRoute("/_auth/sites")({
@@ -13,7 +13,11 @@ export const Route = createFileRoute("/_auth/sites")({
 function RouteComponent() {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
     const [sorting, setSorting] = useState<SortingState>([]);
-    const { data: tableData } = useSitesTableData({ sorting, columnFilters });
+    const [pagination, setPagination] = useState<PaginationState>({
+        pageIndex: 0,
+        pageSize: 10,
+    });
+    const { data: tableData } = useSitesTableData({ sorting, columnFilters, pagination });
 
     return (
         <>
@@ -26,6 +30,12 @@ function RouteComponent() {
                     setSorting={setSorting}
                     columnFilters={columnFilters}
                     setColumnFilters={setColumnFilters}
+                    pagination={{
+                        pageIndex: (tableData?.meta.page ?? pagination.pageIndex) - 1,
+                        pageSize: tableData?.meta.pageSize ?? pagination.pageSize,
+                    }}
+                    setPagination={setPagination}
+                    rowCount={tableData?.meta.total}
                 />
             </div>
         </>

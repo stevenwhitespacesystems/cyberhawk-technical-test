@@ -12,7 +12,6 @@ function Interactive() {
 
     function handleMapLoad(map: mapboxgl.Map) {
         mapInstanceRef.current = map;
-        // TODO: Set the coords for the Sites
     }
 
     return (

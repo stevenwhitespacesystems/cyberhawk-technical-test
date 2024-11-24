@@ -1,6 +1,6 @@
 import { toast } from "@/hooks/use-toast";
 import { columns, Site } from "@/tables/sites/columns";
-import { ColumnFiltersState, SortingState } from "@tanstack/react-table";
+import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/react-table";
 import axios from "axios";
 
 export async function fetchSitesGeoJson(): Promise<GeoJSON.FeatureCollection> {
@@ -20,6 +20,7 @@ export async function fetchSitesGeoJson(): Promise<GeoJSON.FeatureCollection> {
 type Props = {
     sorting: SortingState;
     columnFilters: ColumnFiltersState;
+    pagination: PaginationState;
 };
 type TableDataResponse<T> = {
     data: Array<T>;
@@ -34,6 +35,7 @@ type TableDataResponse<T> = {
 export async function fetchSitesForTable({
     sorting,
     columnFilters,
+    pagination,
 }: Props): Promise<TableDataResponse<Site>> {
     const columnsForTable = columns.map((column) => column.id);
     const params = new URLSearchParams();
@@ -43,6 +45,14 @@ export async function fetchSitesForTable({
 
     if (columnFilters.length) {
         params.append("filters", JSON.stringify(columnFilters));
+    }
+
+    if (pagination.pageIndex >= 0) {
+        params.append("page", (pagination.pageIndex + 1).toString());
+    }
+
+    if (pagination.pageSize) {
+        params.append("pageSize", pagination.pageSize.toString());
     }
 
     const queryParams = params.toString() !== "" ? `?${params.toString()}` : "";
