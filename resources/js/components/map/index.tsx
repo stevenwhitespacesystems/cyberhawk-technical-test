@@ -7,6 +7,7 @@ import equipmentIcon from "@/assets/equipment.png";
 import { useEquipmentGeojsonData } from "@/hooks/use-equipment-geojson-data";
 import EquipmentPopup from "@/components/map/equipment-popup";
 import { createRoot } from "react-dom/client";
+import { Button } from "../ui/button";
 
 type MapProps = {
     onLoad: (map: mapboxgl.Map) => void;
@@ -188,22 +189,29 @@ function Map({ onLoad }: MapProps) {
         return () => {};
     }, [siteData, equipmentData, center, zoom, onLoad]);
 
+    const handleReset = () => {
+        if (mapRef.current) {
+            mapRef.current.flyTo({
+                center: INITIAL_CENTER,
+                zoom: INITIAL_ZOOM,
+                duration: 2000,
+            });
+        }
+    };
+
     return (
-        <>
-            <div
-                className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min"
-                ref={mapContainerRef}
-            />
-            {/* {mapLoaded &&
-                data &&
-                data.features.map((feature, i) => (
-                    <Marker
-                        key={feature.properties?.id ?? i}
-                        feature={feature}
-                        map={mapRef.current}
-                    />
-                ))} */}
-        </>
+        <div
+            className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min"
+            ref={mapContainerRef}
+        >
+            <Button
+                variant="destructive"
+                onClick={() => handleReset()}
+                className="absolute top-4 left-4 z-10"
+            >
+                Reset
+            </Button>
+        </div>
     );
 }
 
