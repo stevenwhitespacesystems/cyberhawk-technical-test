@@ -31,7 +31,9 @@ export async function fetchDataForTable<T>({
     columnFilters,
     pagination,
 }: Props<T>): Promise<TableDataResponse<T>> {
-    const columnsForTable = columns.map((column) => column.id);
+    const columnsForTable = columns
+        .filter((column) => column.id !== "actions")
+        .map((column) => column.id);
     const params = new URLSearchParams();
     if (sorting.length) {
         params.append("sort", JSON.stringify(sorting));
