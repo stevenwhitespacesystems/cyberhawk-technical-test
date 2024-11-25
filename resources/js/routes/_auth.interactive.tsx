@@ -1,4 +1,4 @@
-import Header from "@/components/header";
+import Header, { BreadcrumbItemProp } from "@/components/header";
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef } from "react";
 import Map from "@/components/map";
@@ -14,9 +14,16 @@ function Interactive() {
         mapInstanceRef.current = map;
     }
 
+    const breadcrumbItems: BreadcrumbItemProp[] = [
+        {
+            label: "Interactive",
+            href: "/interactive",
+        },
+    ];
+
     return (
         <>
-            <Header />
+            <Header items={breadcrumbItems} />
             <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
                 <Map onLoad={handleMapLoad} />
             </div>

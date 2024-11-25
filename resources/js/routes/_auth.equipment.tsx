@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import Header from "@/components/header";
+import Header, { BreadcrumbItemProp } from "@/components/header";
 import { DataTable } from "@/tables/root/data-table";
 import { useState } from "react";
 import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/react-table";
@@ -22,16 +22,23 @@ function RouteComponent() {
     const queryFn = () =>
         fetchDataForTable({ model: "equipment", columns, sorting, columnFilters, pagination });
     const { data: tableData } = useTableData({
-        queryKey: "sites",
+        queryKey: "equipment",
         queryFn,
         sorting,
         columnFilters,
         pagination,
     });
 
+    const breadcrumbItems: BreadcrumbItemProp[] = [
+        {
+            label: "Equipment",
+            href: "/equipment",
+        },
+    ];
+
     return (
         <>
-            <Header />
+            <Header items={breadcrumbItems} />
             <div className="container mx-auto py-0 px-3">
                 <DataTable
                     columns={columns}
