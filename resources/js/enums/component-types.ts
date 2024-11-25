@@ -1,3 +1,5 @@
+import { isNaN } from "lodash";
+
 enum ComponentType {
     // Blade components
     BLADE_LEADING_EDGE = "blade_leading_edge",
@@ -40,5 +42,53 @@ enum ComponentType {
     AUXILIARY_SAFETY_SIGNAGE = "auxiliary_safety_signage",
     AUXILIARY_ANEMOMETER = "auxiliary_anemometer",
 }
+
+class ComponentTypeUtils {
+    static values(): string[] {
+        return Object.values(ComponentType).filter((value) => typeof value === "string");
+    }
+
+    static names(): string[] {
+        return Object.keys(ComponentType).filter((key) => isNaN(Number(key)));
+    }
+
+    static label(type: ComponentType): string {
+        const labelMap = {
+            [ComponentType.BLADE_LEADING_EDGE]: "Blade Leading Edge",
+            [ComponentType.BLADE_TRAILING_EDGE]: "Blade Trailing Edge",
+            [ComponentType.BLADE_SURFACE]: "Blade Surface/Skin",
+            [ComponentType.BLADE_TIPS]: "Blade Tips",
+            [ComponentType.BLADE_LIGHTNING_PROTECTION]: "Blade Lightning Protection",
+            [ComponentType.BLADE_ROOT]: "Blade Root Section",
+            [ComponentType.TOWER_SECTIONS]: "Tower Sections/Welds",
+            [ComponentType.TOWER_SURFACE_COATING]: "Tower Surface Coating/Paint",
+            [ComponentType.TOWER_ACCESS_DOORS]: "Tower Access Doors",
+            [ComponentType.TOWER_LADDERS]: "Tower External Ladders",
+            [ComponentType.TOWER_CABLE_RUNS]: "Tower Cable Runs",
+            [ComponentType.NACELLE_CASING]: "Nacelle Casing/Housing",
+            [ComponentType.NACELLE_COOLING_VENTS]: "Nacelle Cooling Vents",
+            [ComponentType.NACELLE_SENSORS]: "Nacelle External Sensors",
+            [ComponentType.NACELLE_WARNING_LIGHTS]: "Nacelle Warning Lights",
+            [ComponentType.NACELLE_TOWER_CONNECTION]: "Nacelle-Tower Connection",
+            [ComponentType.HUB_CASING]: "Hub Casing",
+            [ComponentType.HUB_BLADE_CONNECTIONS]: "Hub Blade Connections",
+            [ComponentType.HUB_SPINNER_CONE]: "Hub Spinner Cone",
+            [ComponentType.HUB_PITCH_MECHANISMS]: "Hub Pitch Mechanisms",
+            [ComponentType.FOUNDATION_BASE_CONNECTION]: "Foundation Base Connection",
+            [ComponentType.FOUNDATION_CONCRETE]: "Foundation Concrete Structure",
+            [ComponentType.FOUNDATION_GROUT_LINE]: "Foundation Grout Line",
+            [ComponentType.FOUNDATION_GROUND_CONDITION]: "Foundation Ground Condition",
+            [ComponentType.AUXILIARY_TRANSFORMERS]: "External Transformers",
+            [ComponentType.AUXILIARY_CABLE_TRENCHES]: "Cable Trenches",
+            [ComponentType.AUXILIARY_ACCESS_PLATFORMS]: "Access Platforms",
+            [ComponentType.AUXILIARY_SAFETY_SIGNAGE]: "Safety Signage",
+            [ComponentType.AUXILIARY_ANEMOMETER]: "Anemometer/Wind Vanes",
+        };
+
+        return labelMap[type] ?? "";
+    }
+}
+
+export { ComponentType, ComponentTypeUtils };
 
 export default ComponentType;
