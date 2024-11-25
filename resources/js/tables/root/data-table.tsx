@@ -39,6 +39,7 @@ interface DataTableProps<TData, TValue> {
     pagination: PaginationState;
     setPagination: OnChangeFn<PaginationState>;
     rowCount: number | undefined;
+    globalActions?: React.ReactNode;
 }
 
 export function DataTable<TData, TValue>({
@@ -51,6 +52,7 @@ export function DataTable<TData, TValue>({
     pagination,
     setPagination,
     rowCount,
+    globalActions,
 }: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
@@ -72,6 +74,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <>
+            {globalActions && <div className="flex justify-end mb-4">{globalActions}</div>}
             <div className="rounded-md border">
                 <Table>
                     <TableHeader>

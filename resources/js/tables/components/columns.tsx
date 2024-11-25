@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ComponentType, ComponentTypeUtils } from "@/enums/component-types";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Pencil, Trash } from "lucide-react";
 
 export type Component = {
     id: string;
@@ -77,5 +77,20 @@ export const columns: ColumnDef<Component>[] = [
         meta: {
             filterVariant: "text",
         },
+    },
+    {
+        id: "actions",
+        cell: () => (
+            <div className="flex justify-end gap-2">
+                <Button variant="outline">
+                    <Pencil />
+                    Edit
+                </Button>
+                <Button variant="destructive">
+                    <Trash />
+                    Delete
+                </Button>
+            </div>
+        ),
     },
 ];

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { EquipmentType, EquipmentTypeUtils } from "@/enums/equipment-types";
 import { ColumnDef } from "@tanstack/react-table";
 import { isNaN } from "lodash";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Pencil, Trash } from "lucide-react";
 
 export type Equipment = {
     id: string;
@@ -119,5 +119,20 @@ export const columns: ColumnDef<Equipment>[] = [
         meta: {
             filterVariant: "text",
         },
+    },
+    {
+        id: "actions",
+        cell: () => (
+            <div className="flex justify-end gap-2">
+                <Button variant="outline">
+                    <Pencil />
+                    Edit
+                </Button>
+                <Button variant="destructive">
+                    <Trash />
+                    Delete
+                </Button>
+            </div>
+        ),
     },
 ];

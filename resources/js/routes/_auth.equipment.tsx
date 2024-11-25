@@ -6,6 +6,8 @@ import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/rea
 import { useTableData } from "@/hooks/use-table-data";
 import { fetchDataForTable } from "@/api/table";
 import { columns } from "@/tables/equipment/columns";
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_auth/equipment")({
     component: RouteComponent,
@@ -53,6 +55,12 @@ function RouteComponent() {
                     }}
                     setPagination={setPagination}
                     rowCount={tableData?.meta.total}
+                    globalActions={
+                        <Button>
+                            <Plus />
+                            Create
+                        </Button>
+                    }
                 />
             </div>
         </>
