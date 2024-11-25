@@ -28,6 +28,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { Fragment } from "react/jsx-runtime";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
@@ -79,8 +80,8 @@ export function DataTable<TData, TValue>({
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
-                            <>
-                                <TableRow key={headerGroup.id}>
+                            <Fragment key={headerGroup.id}>
+                                <TableRow>
                                     {headerGroup.headers.map((header) => (
                                         <TableHead key={header.id}>
                                             {header.isPlaceholder
@@ -105,7 +106,7 @@ export function DataTable<TData, TValue>({
                                         </TableHead>
                                     ))}
                                 </TableRow>
-                            </>
+                            </Fragment>
                         ))}
                     </TableHeader>
                     <TableBody>

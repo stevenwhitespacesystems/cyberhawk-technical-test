@@ -1,18 +1,32 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { EquipmentType, EquipmentTypeUtils } from "@/enums/equipment-types";
 import { InspectionStatus, InspectionStatusUtils } from "@/enums/inspection-statuses";
 import { ColumnDef } from "@tanstack/react-table";
-import { isNaN } from "lodash";
-import { ArrowUpDown, Pencil, Trash } from "lucide-react";
+import { ArrowRight, ArrowUpDown, Trash } from "lucide-react";
 
-export type Equipment = {
+export type Inspection = {
     id: string;
     name: string;
     short_identifier: string;
 };
 
-export const columns: ColumnDef<Equipment>[] = [
+export const columns: ColumnDef<Inspection>[] = [
+    {
+        id: "scheduled_date",
+        accessorKey: "scheduled_date",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Scheduled Date
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        meta: {
+            filterVariant: "date",
+        },
+    },
     {
         id: "site.name",
         accessorKey: "site.name",
@@ -30,81 +44,30 @@ export const columns: ColumnDef<Equipment>[] = [
         },
     },
     {
-        id: "type",
-        accessorKey: "type",
+        id: "equipment.nickname",
+        accessorKey: "equipment.nickname",
         header: ({ column }) => (
             <Button
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
-                Type
+                Equipment
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        cell: ({ cell }) => {
-            const value = cell.getValue() as EquipmentType;
-            return EquipmentTypeUtils.label(value);
-        },
-        enableColumnFilter: false,
     },
     {
-        id: "serial_number",
-        accessorKey: "serial_number",
+        id: "equipment.serial_number",
+        accessorKey: "equipment.serial_number",
         header: ({ column }) => (
             <Button
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
-                Serial Number
+                Equipment Serial Number
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        meta: {
-            filterVariant: "text",
-        },
-    },
-    {
-        id: "nickname",
-        accessorKey: "nickname",
-        header: ({ column }) => (
-            <Button
-                variant="ghost"
-                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-                Nickname
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-        ),
-        meta: {
-            filterVariant: "text",
-        },
-    },
-    {
-        id: "installation_date",
-        accessorKey: "installation_date",
-        header: ({ column }) => (
-            <Button
-                variant="ghost"
-                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-                Installed On
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-        ),
-        meta: {
-            filterVariant: "date",
-        },
-        cell({ cell }) {
-            const value = cell.getValue();
-            if (typeof value === "string" || typeof value === "number") {
-                const date = new Date(value);
-                if (isNaN(date.getTime())) {
-                    return ""; // Invalid date
-                }
-                return date.toLocaleDateString();
-            }
-            return ""; // Unknown type
-        },
     },
     {
         id: "status",
@@ -126,12 +89,28 @@ export const columns: ColumnDef<Equipment>[] = [
         enableColumnFilter: false,
     },
     {
+        id: "completed_date",
+        accessorKey: "completed_date",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Completed Date
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        meta: {
+            filterVariant: "date",
+        },
+    },
+    {
         id: "actions",
         cell: () => (
             <div className="flex justify-end gap-2">
                 <Button variant="outline">
-                    <Pencil />
-                    Edit
+                    <ArrowRight />
+                    View
                 </Button>
                 <Button variant="destructive">
                     <Trash />

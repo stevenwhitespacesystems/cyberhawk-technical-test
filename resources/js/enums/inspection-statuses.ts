@@ -42,7 +42,7 @@ class InspectionStatusUtils {
                 variant: "default",
             },
             [InspectionStatus.REQUIRES_INSPECTION]: {
-                label: "Requires Inspection",
+                label: "Overdue",
                 variant: "secondary",
             },
         };

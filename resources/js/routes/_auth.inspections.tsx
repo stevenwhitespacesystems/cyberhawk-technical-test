@@ -4,6 +4,7 @@ import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/rea
 import { useState } from "react";
 import { useTableData } from "@/hooks/use-table-data";
 import { fetchDataForTable } from "@/api/table";
+import { columns } from "@/tables/inspections/columns";
 import { DataTable } from "@/tables/root/data-table";
 
 export const Route = createFileRoute("/_auth/inspections")({
@@ -19,9 +20,9 @@ function RouteComponent() {
     });
 
     const queryFn = () =>
-        fetchDataForTable({ model: "equipment", columns, sorting, columnFilters, pagination });
+        fetchDataForTable({ model: "inspections", columns, sorting, columnFilters, pagination });
     const { data: tableData } = useTableData({
-        queryKey: "equipment",
+        queryKey: "inspections",
         queryFn,
         sorting,
         columnFilters,

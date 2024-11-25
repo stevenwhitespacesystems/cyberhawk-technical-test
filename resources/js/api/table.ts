@@ -8,7 +8,7 @@ import {
 import axios from "axios";
 
 type Props<T> = {
-    model: "sites" | "equipment" | "components";
+    model: "sites" | "equipment" | "components" | "inspections";
     columns: ColumnDef<T>[];
     sorting: SortingState;
     columnFilters: ColumnFiltersState;
