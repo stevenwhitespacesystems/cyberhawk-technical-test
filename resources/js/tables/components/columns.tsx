@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ComponentType, ComponentTypeUtils } from "@/enums/component-types";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
@@ -58,38 +59,23 @@ export const columns: ColumnDef<Component>[] = [
         },
     },
     {
-        id: "equipment.serial_number",
-        accessorKey: "equipment.serial_number",
+        id: "type",
+        accessorKey: "type",
         header: ({ column }) => (
             <Button
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
-                Equipment Serial Number
+                Type
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
+        cell: ({ cell }) => {
+            const value = cell.getValue() as ComponentType;
+            return ComponentTypeUtils.label(value);
+        },
         meta: {
             filterVariant: "text",
         },
     },
-    // {
-    //     id: "type",
-    //     accessorKey: "type",
-    //     header: ({ column }) => (
-    //         <Button
-    //             variant="ghost"
-    //             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //         >
-    //             Type
-    //             <ArrowUpDown className="ml-2 h-4 w-4" />
-    //         </Button>
-    //     ),
-    //     cell: ({ cell }) => {
-    //         // const value = cell.getValue() as EquipmentType;
-    //         // return EquipmentTypeUtils.label(value);
-    //         return cell.getValue();
-    //     },
-    //     enableColumnFilter: false,
-    // },
 ];

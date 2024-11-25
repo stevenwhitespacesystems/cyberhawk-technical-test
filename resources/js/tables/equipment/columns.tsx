@@ -104,4 +104,20 @@ export const columns: ColumnDef<Equipment>[] = [
             return ""; // Unknown type
         },
     },
+    {
+        id: "status",
+        accessorKey: "status",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Status
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        meta: {
+            filterVariant: "text",
+        },
+    },
 ];
