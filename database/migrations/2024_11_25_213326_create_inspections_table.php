@@ -2,6 +2,7 @@
 
 use App\Models\Equipment;
 use App\Models\Site;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,18 +16,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('components', function (Blueprint $table) {
+        Schema::create('inspections', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignIdFor(Site::class)
-                ->constrained()
-                ->cascadeOnDelete();
-            $table->foreignIdFor(Equipment::class)
-                ->constrained()
-                ->cascadeOnDelete();
-            $table->string('serial_number');
-            $table->string('type');
+            $table->foreignIdFor(Site::class);
+            $table->foreignIdFor(Equipment::class);
+            $table->date('scheduled_date')->nullable();
+            $table->date('completed_date')->nullable();
             $table->string('status');
-            $table->string('specifications')->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
         });
@@ -39,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('components');
+        Schema::dropIfExists('inspections');
     }
 };

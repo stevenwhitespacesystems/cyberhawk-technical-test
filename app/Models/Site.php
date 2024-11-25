@@ -29,6 +29,16 @@ class Site extends Model
         return $this->hasMany(Equipment::class);
     }
 
+    public function components(): HasMany
+    {
+        return $this->hasMany(Component::class);
+    }
+
+    public function inspections(): HasMany
+    {
+        return $this->hasMany(Inspection::class);
+    }
+
     final protected function feature(): Attribute
     {
         return Attribute::make(
