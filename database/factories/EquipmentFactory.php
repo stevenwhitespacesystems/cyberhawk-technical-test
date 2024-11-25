@@ -22,7 +22,7 @@ class EquipmentFactory extends Factory
     {
         return [
             'serial_number' => $this->faker->unique()->numerify('##########'),
-            'nickname' => $this->faker->unique()->word(),
+            'nickname' => "{$this->faker->colorName()} {$this->faker->firstNameMale()}",
             'type' => EquipmentType::WIND_TURBINE,
             'status' => InspectionStatus::OK,
             'installation_date' => now()->subDays(rand(1, 365)),

@@ -22,7 +22,6 @@ class ComponentFactory extends Factory
     {
         return [
             'serial_number' => $this->faker->numerify('##########'),
-            'nickname' => $this->faker->word(),
             'type' => $this->faker->randomElement(ComponentType::values()),
             'status' => InspectionStatus::OK,
             'specifications' => $this->faker->sentence(),
