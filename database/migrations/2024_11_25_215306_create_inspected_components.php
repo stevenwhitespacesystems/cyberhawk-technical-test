@@ -18,9 +18,9 @@ return new class extends Migration
     {
         Schema::create('inspected_components', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignIdFor(Inspection::class);
-            $table->foreignIdFor(Component::class);
-            $table->foreignIdFor(User::class)->nullable();
+            $table->foreignIdFor(Inspection::class)->constrained();
+            $table->foreignIdFor(Component::class)->constrained();
+            $table->foreignIdFor(User::class)->nullable()->constrained()    ;
             $table->date('scheduled_date')->nullable();
             $table->date('completed_date')->nullable();
             $table->unsignedTinyInteger('grade')->nullable();

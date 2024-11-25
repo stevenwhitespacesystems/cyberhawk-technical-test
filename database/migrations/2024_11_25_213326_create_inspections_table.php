@@ -18,8 +18,8 @@ return new class extends Migration
     {
         Schema::create('inspections', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->foreignIdFor(Site::class);
-            $table->foreignIdFor(Equipment::class);
+            $table->foreignIdFor(Site::class)->constrained();
+            $table->foreignIdFor(Equipment::class)->constrained();
             $table->date('scheduled_date')->nullable();
             $table->date('completed_date')->nullable();
             $table->string('status');

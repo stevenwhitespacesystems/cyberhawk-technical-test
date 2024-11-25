@@ -25,7 +25,7 @@ class InspectedComponent extends Model
         return $this->belongsTo(Inspection::class);
     }
 
-    public function inspector(): BelongsTo
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

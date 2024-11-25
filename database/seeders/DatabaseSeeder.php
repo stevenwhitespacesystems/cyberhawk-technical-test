@@ -8,8 +8,11 @@ use App\Enums\EquipmentType;
 use App\Enums\InspectionStatus;
 use App\Models\Component;
 use App\Models\Equipment;
+use App\Models\InspectedComponent;
+use App\Models\Inspection;
 use App\Models\Location;
 use App\Models\Site;
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +25,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        User::factory()->count(4)->create();
         $harburnhead = Site::factory()->create([
             'name' => 'Harburnhead Wind Farm',
             'short_identifier' => 'WF-HB',
@@ -168,10 +172,39 @@ class DatabaseSeeder extends Seeder
         foreach ($equipment as $asset) {
             Component::factory()
                 ->for($asset)
-                ->count(rand(1, 20))
+                ->count(rand(5, 20))
                 ->create([
                     'site_id' => $asset->site_id,
                 ]);
+
+            Inspection::factory()
+                ->for($asset)
+                ->count(rand(1, 3))
+                ->create([
+                    'site_id' => $asset->site_id,
+                ]);
+        }
+
+        $inspections = Inspection::all();
+        $users = User::all();
+        foreach ($inspections as $inspection) {
+
+            $componentsForInspection = $inspection->equipment->components->random(rand(1, 5));
+            foreach ($componentsForInspection as $component) {
+                $user = $users->random();
+                InspectedComponent::factory()
+                    ->for($inspection)
+                    ->for($component)
+                    ->for($user)
+                    ->create();
+            }
+
+            $scheduledDate = $inspection->inspectedComponents->sortBy('scheduled_date')->first()->scheduled_date;
+            $completedDate = $inspection->inspectedComponents->sortByDesc('completed_date')->first()->completed_date;
+            $inspection->update([
+                'scheduled_date' => $scheduledDate,
+                'completed_date' => $completedDate,
+            ]);
         }
     }
 }
