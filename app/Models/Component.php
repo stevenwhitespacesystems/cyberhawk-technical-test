@@ -24,6 +24,11 @@ class Component extends Model
         'status' => InspectionStatus::class,
     ];
 
+    public function site(): BelongsTo
+    {
+        return $this->belongsTo(Site::class);
+    }
+
     public function equipment(): BelongsTo
     {
         return $this->belongsTo(Equipment::class);

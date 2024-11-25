@@ -169,7 +169,9 @@ class DatabaseSeeder extends Seeder
             Component::factory()
                 ->for($asset)
                 ->count(rand(1, 20))
-                ->create();
+                ->create([
+                    'site_id' => $asset->site_id,
+                ]);
         }
     }
 }

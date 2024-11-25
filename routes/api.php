@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\VerifyController;
+use App\Http\Controllers\Component\TableController as ComponentTableController;
 use App\Http\Controllers\Equipment\AllGeoJsonDataController as EquipmentAllGeoJsonDataController;
 use App\Http\Controllers\Equipment\TableController as EquipmentTableController;
 use App\Http\Controllers\Site\AllGeoJsonDataController as SiteAllGeoJsonDataController;
@@ -42,5 +43,8 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     Route::group(['prefix' => 'equipment'], static function () {
         Route::get('/all-geo-json', EquipmentAllGeoJsonDataController::class);
         Route::post('/table-data', EquipmentTableController::class);
+    });
+    Route::group(['prefix' => 'components'], static function () {
+        Route::post('/table-data', ComponentTableController::class);
     });
 });
