@@ -11,13 +11,14 @@ use App\DTO\Table\TableMetaDTO;
 use App\Http\Requests\Table\TableRequest;
 use App\Models\Site;
 use Illuminate\Cache\Repository as CacheRepository;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionMethod;
 
-// TODO: Sort over relationships
 // TODO: Filter over relationships
 final class TableService implements TableServiceContract
 {
@@ -53,11 +54,7 @@ final class TableService implements TableServiceContract
 
         if ($request->has('sort')) {
             $sortParams = json_decode($request->get('sort'), true) ?? [];
-            foreach ($sortParams as $sortParam) {
-                $desc = $sortParam['desc'] ?? false;
-                $direction = $desc ? 'desc' : 'asc';
-                $query->orderBy($sortParam['id'], $direction);
-            }
+            $query = $this->applySorting($query, $sortParams);
         }
 
         $hasFilters = false;
@@ -181,5 +178,35 @@ final class TableService implements TableServiceContract
         // HasOne, HasMany would use different methods to get the foreign key
 
         return null;
+    }
+
+    private function applySorting(Builder $query, array $sorting): Builder
+    {
+        foreach ($sorting as $sort) {
+            $field = $sort['id'];
+            $desc = $sort['desc'] ?? false;
+            $direction = $desc ? 'desc' : 'asc';
+
+            if (str_contains($field, '.')) {
+                [$relation, $column] = explode('.', $field);
+                
+                // Join the related table if not already joined
+                $relationTable = Str::plural(Str::snake($relation));
+                $baseTable = $query->getModel()->getTable();
+                
+                $query->leftJoin(
+                    $relationTable,
+                    "{$baseTable}.{$relation}_id",
+                    '=',
+                    "{$relationTable}.id"
+                )
+                ->orderBy("{$relationTable}.{$column}", $direction)
+                ->select("{$baseTable}.*"); // Avoid duplicate columns
+            } else {
+                $query->orderBy($field, $direction);
+            }
+        }
+
+        return $query;
     }
 }
