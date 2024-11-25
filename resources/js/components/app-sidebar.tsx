@@ -25,23 +25,8 @@ const data = {
         },
         {
             title: "Inspections",
-            url: "/inspections/history",
+            url: "/inspections",
             icon: ListChecks,
-            isActive: true,
-            items: [
-                {
-                    title: "Reports",
-                    url: "/inspections/reports",
-                },
-                {
-                    title: "Create",
-                    url: "/inspections/create",
-                },
-                {
-                    title: "History",
-                    url: "/inspections/history",
-                },
-            ],
         },
     ],
     navSecondary: [

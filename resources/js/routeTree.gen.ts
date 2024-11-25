@@ -18,11 +18,9 @@ import { Route as AuthImport } from "./routes/_auth";
 import { Route as AuthSitesImport } from "./routes/_auth.sites";
 import { Route as AuthSettingsImport } from "./routes/_auth.settings";
 import { Route as AuthInteractiveImport } from "./routes/_auth.interactive";
+import { Route as AuthInspectionsImport } from "./routes/_auth.inspections";
 import { Route as AuthEquipmentImport } from "./routes/_auth.equipment";
 import { Route as AuthComponentsImport } from "./routes/_auth.components";
-import { Route as AuthInspectionsReportsImport } from "./routes/_auth.inspections.reports";
-import { Route as AuthInspectionsHistoryImport } from "./routes/_auth.inspections.history";
-import { Route as AuthInspectionsCreateImport } from "./routes/_auth.inspections.create";
 
 // Create Virtual Routes
 
@@ -79,6 +77,12 @@ const AuthInteractiveRoute = AuthInteractiveImport.update({
     getParentRoute: () => AuthRoute,
 } as any);
 
+const AuthInspectionsRoute = AuthInspectionsImport.update({
+    id: "/inspections",
+    path: "/inspections",
+    getParentRoute: () => AuthRoute,
+} as any);
+
 const AuthEquipmentRoute = AuthEquipmentImport.update({
     id: "/equipment",
     path: "/equipment",
@@ -88,24 +92,6 @@ const AuthEquipmentRoute = AuthEquipmentImport.update({
 const AuthComponentsRoute = AuthComponentsImport.update({
     id: "/components",
     path: "/components",
-    getParentRoute: () => AuthRoute,
-} as any);
-
-const AuthInspectionsReportsRoute = AuthInspectionsReportsImport.update({
-    id: "/inspections/reports",
-    path: "/inspections/reports",
-    getParentRoute: () => AuthRoute,
-} as any);
-
-const AuthInspectionsHistoryRoute = AuthInspectionsHistoryImport.update({
-    id: "/inspections/history",
-    path: "/inspections/history",
-    getParentRoute: () => AuthRoute,
-} as any);
-
-const AuthInspectionsCreateRoute = AuthInspectionsCreateImport.update({
-    id: "/inspections/create",
-    path: "/inspections/create",
     getParentRoute: () => AuthRoute,
 } as any);
 
@@ -162,6 +148,13 @@ declare module "@tanstack/react-router" {
             preLoaderRoute: typeof AuthEquipmentImport;
             parentRoute: typeof AuthImport;
         };
+        "/_auth/inspections": {
+            id: "/_auth/inspections";
+            path: "/inspections";
+            fullPath: "/inspections";
+            preLoaderRoute: typeof AuthInspectionsImport;
+            parentRoute: typeof AuthImport;
+        };
         "/_auth/interactive": {
             id: "/_auth/interactive";
             path: "/interactive";
@@ -183,27 +176,6 @@ declare module "@tanstack/react-router" {
             preLoaderRoute: typeof AuthSitesImport;
             parentRoute: typeof AuthImport;
         };
-        "/_auth/inspections/create": {
-            id: "/_auth/inspections/create";
-            path: "/inspections/create";
-            fullPath: "/inspections/create";
-            preLoaderRoute: typeof AuthInspectionsCreateImport;
-            parentRoute: typeof AuthImport;
-        };
-        "/_auth/inspections/history": {
-            id: "/_auth/inspections/history";
-            path: "/inspections/history";
-            fullPath: "/inspections/history";
-            preLoaderRoute: typeof AuthInspectionsHistoryImport;
-            parentRoute: typeof AuthImport;
-        };
-        "/_auth/inspections/reports": {
-            id: "/_auth/inspections/reports";
-            path: "/inspections/reports";
-            fullPath: "/inspections/reports";
-            preLoaderRoute: typeof AuthInspectionsReportsImport;
-            parentRoute: typeof AuthImport;
-        };
     }
 }
 
@@ -212,23 +184,19 @@ declare module "@tanstack/react-router" {
 interface AuthRouteChildren {
     AuthComponentsRoute: typeof AuthComponentsRoute;
     AuthEquipmentRoute: typeof AuthEquipmentRoute;
+    AuthInspectionsRoute: typeof AuthInspectionsRoute;
     AuthInteractiveRoute: typeof AuthInteractiveRoute;
     AuthSettingsRoute: typeof AuthSettingsRoute;
     AuthSitesRoute: typeof AuthSitesRoute;
-    AuthInspectionsCreateRoute: typeof AuthInspectionsCreateRoute;
-    AuthInspectionsHistoryRoute: typeof AuthInspectionsHistoryRoute;
-    AuthInspectionsReportsRoute: typeof AuthInspectionsReportsRoute;
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
     AuthComponentsRoute: AuthComponentsRoute,
     AuthEquipmentRoute: AuthEquipmentRoute,
+    AuthInspectionsRoute: AuthInspectionsRoute,
     AuthInteractiveRoute: AuthInteractiveRoute,
     AuthSettingsRoute: AuthSettingsRoute,
     AuthSitesRoute: AuthSitesRoute,
-    AuthInspectionsCreateRoute: AuthInspectionsCreateRoute,
-    AuthInspectionsHistoryRoute: AuthInspectionsHistoryRoute,
-    AuthInspectionsReportsRoute: AuthInspectionsReportsRoute,
 };
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren);
@@ -241,12 +209,10 @@ export interface FileRoutesByFullPath {
     "/register": typeof RegisterLazyRoute;
     "/components": typeof AuthComponentsRoute;
     "/equipment": typeof AuthEquipmentRoute;
+    "/inspections": typeof AuthInspectionsRoute;
     "/interactive": typeof AuthInteractiveRoute;
     "/settings": typeof AuthSettingsRoute;
     "/sites": typeof AuthSitesRoute;
-    "/inspections/create": typeof AuthInspectionsCreateRoute;
-    "/inspections/history": typeof AuthInspectionsHistoryRoute;
-    "/inspections/reports": typeof AuthInspectionsReportsRoute;
 }
 
 export interface FileRoutesByTo {
@@ -257,12 +223,10 @@ export interface FileRoutesByTo {
     "/register": typeof RegisterLazyRoute;
     "/components": typeof AuthComponentsRoute;
     "/equipment": typeof AuthEquipmentRoute;
+    "/inspections": typeof AuthInspectionsRoute;
     "/interactive": typeof AuthInteractiveRoute;
     "/settings": typeof AuthSettingsRoute;
     "/sites": typeof AuthSitesRoute;
-    "/inspections/create": typeof AuthInspectionsCreateRoute;
-    "/inspections/history": typeof AuthInspectionsHistoryRoute;
-    "/inspections/reports": typeof AuthInspectionsReportsRoute;
 }
 
 export interface FileRoutesById {
@@ -274,12 +238,10 @@ export interface FileRoutesById {
     "/register": typeof RegisterLazyRoute;
     "/_auth/components": typeof AuthComponentsRoute;
     "/_auth/equipment": typeof AuthEquipmentRoute;
+    "/_auth/inspections": typeof AuthInspectionsRoute;
     "/_auth/interactive": typeof AuthInteractiveRoute;
     "/_auth/settings": typeof AuthSettingsRoute;
     "/_auth/sites": typeof AuthSitesRoute;
-    "/_auth/inspections/create": typeof AuthInspectionsCreateRoute;
-    "/_auth/inspections/history": typeof AuthInspectionsHistoryRoute;
-    "/_auth/inspections/reports": typeof AuthInspectionsReportsRoute;
 }
 
 export interface FileRouteTypes {
@@ -292,12 +254,10 @@ export interface FileRouteTypes {
         | "/register"
         | "/components"
         | "/equipment"
+        | "/inspections"
         | "/interactive"
         | "/settings"
-        | "/sites"
-        | "/inspections/create"
-        | "/inspections/history"
-        | "/inspections/reports";
+        | "/sites";
     fileRoutesByTo: FileRoutesByTo;
     to:
         | "/"
@@ -307,12 +267,10 @@ export interface FileRouteTypes {
         | "/register"
         | "/components"
         | "/equipment"
+        | "/inspections"
         | "/interactive"
         | "/settings"
-        | "/sites"
-        | "/inspections/create"
-        | "/inspections/history"
-        | "/inspections/reports";
+        | "/sites";
     id:
         | "__root__"
         | "/"
@@ -322,12 +280,10 @@ export interface FileRouteTypes {
         | "/register"
         | "/_auth/components"
         | "/_auth/equipment"
+        | "/_auth/inspections"
         | "/_auth/interactive"
         | "/_auth/settings"
-        | "/_auth/sites"
-        | "/_auth/inspections/create"
-        | "/_auth/inspections/history"
-        | "/_auth/inspections/reports";
+        | "/_auth/sites";
     fileRoutesById: FileRoutesById;
 }
 
@@ -372,12 +328,10 @@ export const routeTree = rootRoute
       "children": [
         "/_auth/components",
         "/_auth/equipment",
+        "/_auth/inspections",
         "/_auth/interactive",
         "/_auth/settings",
-        "/_auth/sites",
-        "/_auth/inspections/create",
-        "/_auth/inspections/history",
-        "/_auth/inspections/reports"
+        "/_auth/sites"
       ]
     },
     "/login": {
@@ -397,6 +351,10 @@ export const routeTree = rootRoute
       "filePath": "_auth.equipment.tsx",
       "parent": "/_auth"
     },
+    "/_auth/inspections": {
+      "filePath": "_auth.inspections.tsx",
+      "parent": "/_auth"
+    },
     "/_auth/interactive": {
       "filePath": "_auth.interactive.tsx",
       "parent": "/_auth"
@@ -407,18 +365,6 @@ export const routeTree = rootRoute
     },
     "/_auth/sites": {
       "filePath": "_auth.sites.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/inspections/create": {
-      "filePath": "_auth.inspections.create.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/inspections/history": {
-      "filePath": "_auth.inspections.history.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/inspections/reports": {
-      "filePath": "_auth.inspections.reports.tsx",
       "parent": "/_auth"
     }
   }
