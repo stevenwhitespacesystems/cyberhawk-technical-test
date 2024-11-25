@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { EquipmentType, EquipmentTypeUtils } from "@/enums/equipment-types";
 import { ColumnDef } from "@tanstack/react-table";
 import { isNaN } from "lodash";
 import { ArrowUpDown } from "lucide-react";
@@ -26,7 +27,6 @@ export const columns: ColumnDef<Equipment>[] = [
             filterVariant: "text",
         },
     },
-    // TODO: Create Enum for this
     {
         id: "type",
         accessorKey: "type",
@@ -39,9 +39,11 @@ export const columns: ColumnDef<Equipment>[] = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        meta: {
-            filterVariant: "text",
+        cell: ({ cell }) => {
+            const value = cell.getValue() as EquipmentType;
+            return EquipmentTypeUtils.label(value);
         },
+        enableColumnFilter: false,
     },
     {
         id: "serial_number",
@@ -90,8 +92,8 @@ export const columns: ColumnDef<Equipment>[] = [
         meta: {
             filterVariant: "date",
         },
-        cell(props) {
-            const value = props.getValue();
+        cell({ cell }) {
+            const value = cell.getValue();
             if (typeof value === "string" || typeof value === "number") {
                 const date = new Date(value);
                 if (isNaN(date.getTime())) {
