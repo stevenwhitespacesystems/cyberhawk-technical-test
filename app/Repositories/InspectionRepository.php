@@ -6,6 +6,7 @@ namespace App\Repositories;
 
 use App\Base\Repository;
 use App\Models\Inspection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 final class InspectionRepository extends Repository
 {
@@ -18,8 +19,32 @@ final class InspectionRepository extends Repository
     {
         /** @var Inspection */
         return $this->createQueryBuilder()
-            ->with('site:id,name,short_identifier,address_line_1,address_line_2,city,state,postal_code,country')
-            ->with('equipment:id,type,serial_number,nickname,installation_date')
+            ->with('site', static function (BelongsTo $query): void {
+                $query->select([
+                    'id',
+                    'name',
+                    'short_identifier',
+                    'address_line_1',
+                    'address_line_2',
+                    'city',
+                    'state',
+                    'postal_code',
+                    'country',
+                    'latitude',
+                    'longitude',
+                ]);
+            })
+            ->with('equipment', static function (BelongsTo $query): void {
+                $query->select([
+                    'id',
+                    'type',
+                    'serial_number',
+                    'nickname',
+                    'installation_date',
+                    'latitude',
+                    'longitude',
+                ]);
+            })
             ->findOrFail($id, [
                 'id',
                 'site_id',

@@ -27,6 +27,18 @@ final class InspectionService implements InspectionServiceContract
 
     final public function viewInspection(string $inspectionId): Inspection
     {
-        return $this->inspectionRepository->viewInspection($inspectionId);
+        $inspection = $this->inspectionRepository->viewInspection($inspectionId);
+        $inspection->site
+            ->append('address_comma')
+            ->makeHidden([
+                'address_line_1',
+                'address_line_2',
+                'city',
+                'state',
+                'postal_code',
+                'country',
+            ]);
+
+        return $inspection;
     }
 }
