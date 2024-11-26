@@ -1,7 +1,5 @@
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EquipmentType, EquipmentTypeUtils } from "@/enums/equipment-types";
-import { InspectionStatus, InspectionStatusUtils } from "@/enums/inspection-statuses";
 import { ColumnDef } from "@tanstack/react-table";
 import { isNaN } from "lodash";
 import { ArrowUpDown, Pencil, Trash } from "lucide-react";
@@ -25,9 +23,7 @@ export const columns: ColumnDef<Equipment>[] = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        meta: {
-            filterVariant: "text",
-        },
+        enableColumnFilter: false,
     },
     {
         id: "type",
@@ -110,11 +106,11 @@ export const columns: ColumnDef<Equipment>[] = [
         id: "actions",
         cell: () => (
             <div className="flex justify-end gap-2">
-                <Button variant="outline">
+                <Button variant="outline" disabled>
                     <Pencil />
                     Edit
                 </Button>
-                <Button variant="destructive">
+                <Button variant="destructive" disabled>
                     <Trash />
                     Delete
                 </Button>

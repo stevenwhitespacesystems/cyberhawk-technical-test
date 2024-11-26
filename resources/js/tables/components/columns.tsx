@@ -22,9 +22,7 @@ export const columns: ColumnDef<Component>[] = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        meta: {
-            filterVariant: "text",
-        },
+        enableColumnFilter: false,
     },
     {
         id: "equipment.nickname",
@@ -38,9 +36,7 @@ export const columns: ColumnDef<Component>[] = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        meta: {
-            filterVariant: "text",
-        },
+        enableColumnFilter: false,
     },
     {
         id: "equipment.serial_number",
@@ -54,9 +50,7 @@ export const columns: ColumnDef<Component>[] = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
-        meta: {
-            filterVariant: "text",
-        },
+        enableColumnFilter: false,
     },
     {
         id: "type",
@@ -74,6 +68,20 @@ export const columns: ColumnDef<Component>[] = [
             const value = cell.getValue() as ComponentType;
             return ComponentTypeUtils.label(value);
         },
+        enableColumnFilter: false,
+    },
+    {
+        id: "serial_number",
+        accessorKey: "serial_number",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Component Serial Number
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
         meta: {
             filterVariant: "text",
         },
@@ -82,11 +90,11 @@ export const columns: ColumnDef<Component>[] = [
         id: "actions",
         cell: () => (
             <div className="flex justify-end gap-2">
-                <Button variant="outline">
+                <Button variant="outline" disabled>
                     <Pencil />
                     Edit
                 </Button>
-                <Button variant="destructive">
+                <Button variant="destructive" disabled>
                     <Trash />
                     Delete
                 </Button>

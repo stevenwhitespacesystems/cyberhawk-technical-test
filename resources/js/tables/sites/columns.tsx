@@ -42,11 +42,11 @@ export const columns: ColumnDef<Site>[] = [
         id: "actions",
         cell: () => (
             <div className="flex justify-end gap-2">
-                <Button variant="outline">
+                <Button variant="outline" disabled>
                     <Pencil />
                     Edit
                 </Button>
-                <Button variant="destructive">
+                <Button variant="destructive" disabled>
                     <Trash />
                     Delete
                 </Button>
