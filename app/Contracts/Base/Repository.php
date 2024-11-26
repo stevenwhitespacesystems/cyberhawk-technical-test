@@ -41,8 +41,4 @@ interface Repository
      * @return T|null
      */
     public function findOneOrNullBy(iterable $attributes = [], iterable $columns = ['*']);
-
-    public function raw(callable $closure): Collection;
-
-    public function aggregate(array $pipeline): Collection;
 }

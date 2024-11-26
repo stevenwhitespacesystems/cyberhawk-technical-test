@@ -75,16 +75,4 @@ class Repository implements RepositoryInterface
         /** @var T|null */
         return $this->createQueryBuilder()->where($attributes)->first($columns);
     }
-
-    public function raw(callable $closure): Collection
-    {
-        return forward_static_call([$this->modelClass, 'raw'], $closure);
-    }
-
-    public function aggregate(array $pipeline): Collection
-    {
-        return $this->raw(static function ($collection) use ($pipeline) {
-            return $collection->aggregate($pipeline);
-        });
-    }
 }
