@@ -30,7 +30,6 @@ final class EquipmentService implements EquipmentServiceContract
             'longitude',
             'latitude',
             'serial_number',
-            'status',
             'type',
         ];
 

@@ -20,7 +20,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $id
  * @property string $nickname
  * @property string $serial_number
- * @property InspectionStatus $status
  * @property EquipmentType $type
  * @property float $longitude
  * @property float $latitude
@@ -47,7 +46,6 @@ class Equipment extends Model
                         $attributes['id'],
                         $attributes['nickname'],
                         $attributes['serial_number'],
-                        InspectionStatus::from($attributes['status']),
                         EquipmentType::from($attributes['type'])
                     ),
                     geometry: new GeometryDTO(

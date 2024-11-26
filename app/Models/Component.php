@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\ComponentType;
-use App\Enums\InspectionStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,7 +21,6 @@ class Component extends Model
      */
     protected $casts = [
         'type' => ComponentType::class,
-        'status' => InspectionStatus::class,
     ];
 
     public function site(): BelongsTo
