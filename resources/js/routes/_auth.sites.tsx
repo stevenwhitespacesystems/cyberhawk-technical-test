@@ -8,6 +8,7 @@ import { useTableData } from "@/hooks/use-table-data";
 import { fetchDataForTable } from "@/api/table";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 export const Route = createFileRoute("/_auth/sites")({
     component: RouteComponent,
@@ -56,7 +57,7 @@ function RouteComponent() {
                     setPagination={setPagination}
                     rowCount={tableData?.meta.total}
                     globalActions={
-                        <Button>
+                        <Button disabled>
                             <Plus />
                             Create
                         </Button>

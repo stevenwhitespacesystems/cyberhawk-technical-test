@@ -8,6 +8,7 @@ import { columns } from "@/tables/components/columns";
 import { DataTable } from "@/tables/root/data-table";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/hooks/use-toast";
 export const Route = createFileRoute("/_auth/components")({
     component: RouteComponent,
 });
@@ -56,7 +57,7 @@ function RouteComponent() {
                     setPagination={setPagination}
                     rowCount={tableData?.meta.total}
                     globalActions={
-                        <Button>
+                        <Button disabled>
                             <Plus />
                             Create
                         </Button>
