@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Contracts\Services\ComponentServiceContract;
 use App\Contracts\Services\InspectionServiceContract;
 use App\DTO\Table\TableDataDTO;
 use App\Http\Requests\Table\TableRequest;
-use App\Repositories\ComponentRepository;
 use App\Repositories\InspectionRepository;
 use Illuminate\Cache\Repository as CacheRepository;
 
