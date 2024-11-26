@@ -35,6 +35,8 @@ class Equipment extends Model
     protected $casts = [
         'type' => EquipmentType::class,
         'status' => InspectionStatus::class,
+        'latitude' => 'float',
+        'longitude' => 'float',
     ];
 
     final protected function feature(): Attribute

@@ -24,6 +24,11 @@ class Site extends Model
     use HasFactory;
     use HasUlids;
 
+    protected $casts = [
+        'latitude' => 'float',
+        'longitude' => 'float',
+    ];
+
     public function equipment(): HasMany
     {
         return $this->hasMany(Equipment::class);
@@ -53,6 +58,22 @@ class Site extends Model
                         ]
                     )
                 );
+            }
+        );
+    }
+
+    final public function addressComma(): Attribute
+    {
+        return Attribute::make(
+            get: static function (mixed $value, array $attributes): string {
+                return implode(', ', array_filter([
+                    $attributes['address_line_1'],
+                    $attributes['address_line_2'],
+                    $attributes['city'],
+                    $attributes['state'],
+                    $attributes['postal_code'],
+                    $attributes['country'],
+                ]));
             }
         );
     }
