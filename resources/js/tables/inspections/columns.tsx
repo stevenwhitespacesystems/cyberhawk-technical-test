@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { EquipmentType, EquipmentTypeUtils } from "@/enums/equipment-types";
 import { ColumnDef } from "@tanstack/react-table";
 import { isNaN } from "lodash";
 import { ArrowRight, ArrowUpDown } from "lucide-react";
@@ -48,6 +49,7 @@ export const columns: ColumnDef<Inspection>[] = [
             }
             return ""; // Unknown type
         },
+        enableColumnFilter: false,
     },
     {
         id: "site.name",
@@ -64,6 +66,25 @@ export const columns: ColumnDef<Inspection>[] = [
         meta: {
             filterVariant: "text",
         },
+        enableColumnFilter: false,
+    },
+    {
+        id: "equipment.type",
+        accessorKey: "equipment.type",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Equipment
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        cell: ({ cell }) => {
+            const value = cell.getValue() as EquipmentType;
+            return EquipmentTypeUtils.label(value);
+        },
+        enableColumnFilter: false,
     },
     {
         id: "equipment.nickname",
@@ -77,6 +98,7 @@ export const columns: ColumnDef<Inspection>[] = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
+        enableColumnFilter: false,
     },
     {
         id: "equipment.serial_number",
@@ -90,6 +112,7 @@ export const columns: ColumnDef<Inspection>[] = [
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
+        enableColumnFilter: false,
     },
     {
         id: "completed_date",
