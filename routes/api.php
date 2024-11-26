@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\VerifyController;
 use App\Http\Controllers\Component\TableController as ComponentTableController;
 use App\Http\Controllers\Equipment\AllGeoJsonDataController as EquipmentAllGeoJsonDataController;
 use App\Http\Controllers\Equipment\TableController as EquipmentTableController;
+use App\Http\Controllers\Inspection\TableController as InspectionTableController;
 use App\Http\Controllers\Site\AllGeoJsonDataController as SiteAllGeoJsonDataController;
 use App\Http\Controllers\Site\TableController as SiteTableController;
 use Illuminate\Support\Facades\Route;
@@ -46,5 +47,8 @@ Route::group(['middleware' => ['auth:sanctum']], static function () {
     });
     Route::group(['prefix' => 'components'], static function () {
         Route::post('/table-data', ComponentTableController::class);
+    });
+    Route::group(['prefix' => 'inspections'], static function () {
+        Route::post('/table-data', InspectionTableController::class);
     });
 });
