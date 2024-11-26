@@ -25,7 +25,6 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->string('serial_number');
             $table->string('type');
-            $table->string('status');
             $table->string('specifications')->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();

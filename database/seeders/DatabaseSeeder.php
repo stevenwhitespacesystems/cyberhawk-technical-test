@@ -71,7 +71,6 @@ class DatabaseSeeder extends Seeder
         Equipment::factory()
             ->for($harburnhead)
             ->create([
-                'status' => InspectionStatus::FAILED,
                 'latitude' => 55.821174703307655,
                 'longitude' => -3.5517365618665417,
             ]);
@@ -79,7 +78,6 @@ class DatabaseSeeder extends Seeder
         Equipment::factory()
             ->for($harburnhead)
             ->create([
-                'status' => InspectionStatus::REQUIRES_INSPECTION,
                 'latitude' => 55.805183856718436,
                 'longitude' => -3.5456470603022985,
             ]);
@@ -201,9 +199,11 @@ class DatabaseSeeder extends Seeder
 
             $scheduledDate = $inspection->inspectedComponents->sortBy('scheduled_date')->first()->scheduled_date;
             $completedDate = $inspection->inspectedComponents->sortByDesc('completed_date')->first()->completed_date;
+            $averageGrade = round($inspection->inspectedComponents->avg('grade'), 1);
             $inspection->update([
                 'scheduled_date' => $scheduledDate,
                 'completed_date' => $completedDate,
+                'grade' => $averageGrade,
             ]);
         }
     }

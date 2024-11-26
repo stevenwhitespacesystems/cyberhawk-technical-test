@@ -17,10 +17,11 @@ class InspectedComponentFactory extends Factory
     public function definition()
     {
         $scheduledDate = now()->addDays(rand(-31, 31));
+        $completedDate = $scheduledDate->copy()->addDays(rand(1, 30));
 
         return [
             'scheduled_date' => $scheduledDate,
-            'completed_date' => $scheduledDate,
+            'completed_date' => $completedDate,
             'grade' => rand(1, 5),
         ];
     }

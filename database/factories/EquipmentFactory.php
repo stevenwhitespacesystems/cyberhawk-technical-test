@@ -24,7 +24,6 @@ class EquipmentFactory extends Factory
             'serial_number' => $this->faker->unique()->numerify('##########'),
             'nickname' => "{$this->faker->colorName()} {$this->faker->firstNameMale()}",
             'type' => EquipmentType::WIND_TURBINE,
-            'status' => InspectionStatus::OK,
             'installation_date' => now()->subDays(rand(1, 365)),
         ];
     }

@@ -18,7 +18,6 @@ class InspectionFactory extends Factory
     public function definition()
     {
         return [
-            'status' => InspectionStatus::OK,
         ];
     }
 }

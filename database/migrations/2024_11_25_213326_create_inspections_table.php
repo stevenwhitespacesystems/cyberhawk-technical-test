@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignIdFor(Equipment::class)->constrained();
             $table->date('scheduled_date')->nullable();
             $table->date('completed_date')->nullable();
-            $table->string('status');
+            $table->unsignedDecimal('grade', 4, 1)->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
         });

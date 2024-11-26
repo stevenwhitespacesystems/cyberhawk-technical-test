@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('serial_number')->nullable();
             $table->string('nickname')->nullable();
             $table->date('installation_date')->nullable();
-            $table->string('status');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->softDeletesTz();
