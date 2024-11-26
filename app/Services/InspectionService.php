@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Contracts\Services\InspectionServiceContract;
 use App\DTO\Table\TableDataDTO;
 use App\Http\Requests\Table\TableRequest;
+use App\Models\Inspection;
 use App\Repositories\InspectionRepository;
 use Illuminate\Cache\Repository as CacheRepository;
 
@@ -22,5 +23,10 @@ final class InspectionService implements InspectionServiceContract
     {
         $tableService = new TableService($this->inspectionRepository, $this->cache);
         return $tableService->getData($request);
+    }
+
+    final public function viewInspection(string $inspectionId): Inspection
+    {
+        return $this->inspectionRepository->viewInspection($inspectionId);
     }
 }

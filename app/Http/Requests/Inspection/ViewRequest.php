@@ -6,6 +6,8 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ViewRequest extends FormRequest
 {
+    public const ID = 'id';
+    
     public function authorize(): bool
     {
         return true;
@@ -17,7 +19,7 @@ class ViewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => ['required', 'ulid', 'exists:inspections,id'],
+            self::ID => ['required', 'ulid', 'exists:inspections,id'],
         ];
     }
 }
