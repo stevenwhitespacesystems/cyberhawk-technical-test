@@ -107,25 +107,6 @@ export const columns: ColumnDef<Equipment>[] = [
         },
     },
     {
-        id: "status",
-        accessorKey: "status",
-        header: ({ column }) => (
-            <Button
-                variant="ghost"
-                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-                Status
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-        ),
-        cell: ({ cell }) => {
-            const value = cell.getValue() as InspectionStatus;
-            const badgeConfig = InspectionStatusUtils.badgeConfig(value);
-            return <Badge variant={badgeConfig.variant}>{badgeConfig.label}</Badge>;
-        },
-        enableColumnFilter: false,
-    },
-    {
         id: "actions",
         cell: () => (
             <div className="flex justify-end gap-2">
