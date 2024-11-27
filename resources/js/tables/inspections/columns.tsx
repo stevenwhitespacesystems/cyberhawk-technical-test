@@ -2,17 +2,39 @@ import InspectionView from "@/components/inspection-view";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EquipmentType, EquipmentTypeUtils } from "@/enums/equipment-types";
+import getGradeVariant from "@/lib/getGradeVariant";
 import { ColumnDef } from "@tanstack/react-table";
 import { isNaN } from "lodash";
 import { ArrowRight, ArrowUpDown } from "lucide-react";
 
 export type Inspection = {
     id: string;
-    name: string;
-    short_identifier: string;
+    reference: number;
+    scheduled_date: string;
+    completed_date: string;
+    site: {
+        name: string;
+    };
+    equipment: {
+        type: EquipmentType;
+        serial_number: string;
+    };
 };
 
 export const columns: ColumnDef<Inspection>[] = [
+    {
+        id: "reference",
+        accessorKey: "reference",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Ref
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+    },
     {
         id: "scheduled_date",
         accessorKey: "scheduled_date",
@@ -21,7 +43,35 @@ export const columns: ColumnDef<Inspection>[] = [
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
-                Scheduled Date
+                Scheduled
+                <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+        ),
+        meta: {
+            filterVariant: "date",
+        },
+        cell({ cell }) {
+            const value = cell.getValue();
+            if (typeof value === "string" || typeof value === "number") {
+                const date = new Date(value);
+                if (isNaN(date.getTime())) {
+                    return ""; // Invalid date
+                }
+                return date.toLocaleDateString();
+            }
+            return ""; // Unknown type
+        },
+        enableColumnFilter: false,
+    },
+    {
+        id: "scheduled_date",
+        accessorKey: "scheduled_date",
+        header: ({ column }) => (
+            <Button
+                variant="ghost"
+                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            >
+                Scheduled
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
@@ -84,7 +134,7 @@ export const columns: ColumnDef<Inspection>[] = [
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
-                Equipment Serial Number
+                Equipment Serial
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
@@ -98,7 +148,7 @@ export const columns: ColumnDef<Inspection>[] = [
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
-                Completed Date
+                Completed
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
@@ -125,7 +175,7 @@ export const columns: ColumnDef<Inspection>[] = [
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
-                Avg Component Grade
+                Avg Grade
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
@@ -134,21 +184,11 @@ export const columns: ColumnDef<Inspection>[] = [
         },
         cell: ({ cell }) => {
             const value = cell.getValue() as number;
-            const getVariant = (grade: number) => {
-                if (grade >= 3.5) {
-                    return "default";
-                }
-
-                if (grade >= 3.0) {
-                    return "secondary";
-                }
-
-                return "destructive";
-            };
+            const variant = getGradeVariant(value);
 
             return (
                 <div className="flex justify-center">
-                    <Badge variant={getVariant(value)}>{value}</Badge>
+                    <Badge variant={variant}>{value}</Badge>
                 </div>
             );
         },
