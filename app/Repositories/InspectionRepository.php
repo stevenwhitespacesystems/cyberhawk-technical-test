@@ -7,6 +7,7 @@ namespace App\Repositories;
 use App\Base\Repository;
 use App\Models\Inspection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 final class InspectionRepository extends Repository
 {
@@ -44,6 +45,30 @@ final class InspectionRepository extends Repository
                     'latitude',
                     'longitude',
                 ]);
+            })
+            ->with('inspectedComponents', static function (HasMany $query) {
+                $query->select(
+                    'id',
+                    'completed_date',
+                    'component_id',
+                    'grade',
+                    'inspection_id',
+                    'scheduled_date',
+                    'user_id',
+                )
+                ->with('component', static function (BelongsTo $query) {
+                    $query->select(
+                        'id',
+                        'serial_number',
+                        'type',
+                    );
+                })
+                ->with('user', static function (BelongsTo $query) {
+                    $query->select(
+                        'id',
+                        'name',
+                    );
+                });
             })
             ->findOrFail($id, [
                 'id',
