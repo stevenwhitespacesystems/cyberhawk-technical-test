@@ -84,7 +84,7 @@ export const columns: ColumnDef<Inspection>[] = [
                 variant="ghost"
                 onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
-                Equipment
+                Equipment Nickname
                 <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
         ),
@@ -148,22 +148,30 @@ export const columns: ColumnDef<Inspection>[] = [
         },
         cell: ({ cell }) => {
             const value = cell.getValue() as number;
-            let jsx = null;
-            if (value >= 3.5) {
-                jsx = <Badge variant="default">{value}</Badge>;
-            } else if (value >= 3.0) {
-                jsx = <Badge variant="secondary">{value}</Badge>;
-            } else {
-                jsx = <Badge variant="destructive">{value}</Badge>;
-            }
-            return <div className="flex justify-center">{jsx}</div>;
+            const getVariant = (grade: number) => {
+                if (grade >= 3.5) {
+                    return "default";
+                }
+
+                if (grade >= 3.0) {
+                    return "secondary";
+                }
+
+                return "destructive";
+            };
+
+            return (
+                <div className="flex justify-center">
+                    <Badge variant={getVariant(value)}>{value}</Badge>
+                </div>
+            );
         },
     },
     {
         id: "actions",
-        cell: () => (
+        cell: ({ row }) => (
             <div className="flex justify-end gap-2">
-                <InspectionView>
+                <InspectionView inspectionId={row.original.id}>
                     <Button variant="outline">
                         <ArrowRight />
                         View
