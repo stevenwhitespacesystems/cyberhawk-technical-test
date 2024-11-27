@@ -1,3 +1,4 @@
+import { ComponentType } from "@/enums/component-types";
 import { EquipmentType } from "@/enums/equipment-types";
 import { toast } from "@/hooks/use-toast";
 import axios from "axios";
@@ -21,6 +22,26 @@ type Equipment = {
     longitude: number;
 };
 
+type Component = {
+    id: string;
+    serial_number: string;
+    type: ComponentType;
+};
+
+type User = {
+    id: string;
+    name: string;
+};
+
+type InspectedComponent = {
+    id: string;
+    completed_date: string;
+    component: Component;
+    grade: number;
+    scheduled_date: string;
+    user: User;
+};
+
 type Inspection = {
     id: string;
     site_id: string;
@@ -31,6 +52,7 @@ type Inspection = {
     grade: number;
     site: Site;
     equipment: Equipment;
+    inspected_components: InspectedComponent[];
 };
 
 type InspectionViewPayload = {

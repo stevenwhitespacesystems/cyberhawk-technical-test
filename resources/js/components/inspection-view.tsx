@@ -1,25 +1,35 @@
 import { useState } from "react";
 import { useInspectionView } from "@/hooks/use-inspection-view";
 import { EquipmentType, EquipmentTypeUtils } from "@/enums/equipment-types";
-import { Button } from "./ui/button";
+import { ComponentType, ComponentTypeUtils } from "@/enums/component-types";
+import Slider from "@mui/material/Slider";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import {
     Dialog,
     DialogContent,
     DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "./ui/dialog";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 
 type Props = {
     inspectionId: string;
     children: JSX.Element;
 };
 
+const marks = [
+    { value: 1, label: "1" },
+    { value: 2, label: "2" },
+    { value: 3, label: "3" },
+    { value: 4, label: "4" },
+    { value: 5, label: "5" },
+];
+
 function InspectionView({ inspectionId, children }: Props) {
     const [open, setOpen] = useState<boolean>(false);
+    const [grades, setGrades] = useState<Record<string, number>>({});
     const {
         data: inspection,
         isLoading,
@@ -32,7 +42,7 @@ function InspectionView({ inspectionId, children }: Props) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>{children}</DialogTrigger>
-            <DialogContent className="min-w-[80%]">
+            <DialogContent className="min-w-[95%]">
                 <DialogHeader>
                     <DialogTitle>Inspection Report</DialogTitle>
                     <DialogDescription>
@@ -60,7 +70,7 @@ function InspectionView({ inspectionId, children }: Props) {
                                 </div>
                                 <dl>
                                     <dt className="text-gray-500 text-sm">Address</dt>
-                                    <dd>{inspection.site.address_comma}</dd>
+                                    <dd className="text-sm">{inspection.site.address_comma}</dd>
                                 </dl>
                                 <div className="flex justify-between">
                                     <dl>
@@ -123,7 +133,32 @@ function InspectionView({ inspectionId, children }: Props) {
                             <CardHeader>
                                 <CardTitle>Inspection Details</CardTitle>
                             </CardHeader>
-                            <CardContent>Content</CardContent>
+                            <CardContent className="flex flex-col gap-3">
+                                <div className="flex justify-between">
+                                    <dl>
+                                        <dt className="text-gray-500 text-sm">Scheduled</dt>
+                                        <dd>
+                                            {new Date(
+                                                inspection.scheduled_date
+                                            ).toLocaleDateString()}
+                                        </dd>
+                                    </dl>
+                                    <dl className="text-right">
+                                        <dt className="text-gray-500 text-sm">Reference</dt>
+                                        <dd>{inspection.reference}</dd>
+                                    </dl>
+                                </div>
+                                <div className="flex justify-between">
+                                    <dl>
+                                        <dt className="text-gray-500 text-sm">Completed</dt>
+                                        <dd>
+                                            {new Date(
+                                                inspection.completed_date
+                                            ).toLocaleDateString()}
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </CardContent>
                         </Card>
                     </div>
                 )}
@@ -131,11 +166,76 @@ function InspectionView({ inspectionId, children }: Props) {
                     <CardHeader>
                         <CardTitle>Inspected Components</CardTitle>
                     </CardHeader>
-                    <CardContent>Content</CardContent>
+                    <CardContent>
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Type</TableHead>
+                                    <TableHead className="w-[100px]">Serial</TableHead>
+                                    <TableHead className="w-[100px]">Scheduled</TableHead>
+                                    <TableHead className="w-[150px]">Checked By</TableHead>
+                                    <TableHead className="w-[100px]">Completed</TableHead>
+                                    <TableHead className="w-[450px] text-center">Grade</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {inspection?.inspected_components.map((inspectedComponent) => (
+                                    <TableRow key={inspectedComponent.id}>
+                                        <TableCell className="p-1">
+                                            {ComponentTypeUtils.label(
+                                                inspectedComponent.component.type as ComponentType
+                                            )}
+                                        </TableCell>
+                                        <TableCell className="p-1">
+                                            {inspectedComponent.component.serial_number}
+                                        </TableCell>
+                                        <TableCell className="p-1">
+                                            {new Date(
+                                                inspectedComponent.scheduled_date
+                                            ).toLocaleDateString()}
+                                        </TableCell>
+                                        <TableCell className="p-1">
+                                            {inspectedComponent.user.name}
+                                        </TableCell>
+                                        <TableCell className="p-1">
+                                            {new Date(
+                                                inspectedComponent.completed_date
+                                            ).toLocaleDateString()}
+                                        </TableCell>
+                                        <TableCell className="py-1 pr-4">
+                                            <Slider
+                                                color="primary"
+                                                min={1}
+                                                max={5}
+                                                step={1}
+                                                valueLabelDisplay="auto"
+                                                value={
+                                                    grades[inspectedComponent.id] ??
+                                                    inspectedComponent.grade
+                                                }
+                                                marks={marks}
+                                                onChange={(_, value) => {
+                                                    setGrades({
+                                                        ...grades,
+                                                        [inspectedComponent.id]: value as number,
+                                                    });
+                                                }}
+                                                sx={{
+                                                    "& .MuiSlider-thumb": {
+                                                        "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible":
+                                                            {
+                                                                boxShadow: "none",
+                                                            },
+                                                    },
+                                                }}
+                                            />
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </CardContent>
                 </Card>
-                <DialogFooter>
-                    <Button type="submit">Save changes</Button>
-                </DialogFooter>
             </DialogContent>
         </Dialog>
     );
