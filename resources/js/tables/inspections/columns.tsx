@@ -77,20 +77,6 @@ export const columns: ColumnDef<Inspection>[] = [
         enableColumnFilter: false,
     },
     {
-        id: "equipment.nickname",
-        accessorKey: "equipment.nickname",
-        header: ({ column }) => (
-            <Button
-                variant="ghost"
-                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-                Equipment Nickname
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-        ),
-        enableColumnFilter: false,
-    },
-    {
         id: "equipment.serial_number",
         accessorKey: "equipment.serial_number",
         header: ({ column }) => (
