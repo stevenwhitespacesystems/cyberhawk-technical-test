@@ -90,5 +90,3 @@ class ComponentTypeUtils {
 }
 
 export { ComponentType, ComponentTypeUtils };
-
-export default ComponentType;

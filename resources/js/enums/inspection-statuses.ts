@@ -52,5 +52,3 @@ class InspectionStatusUtils {
 }
 
 export { InspectionStatus, InspectionStatusUtils };
-
-export default InspectionStatus;

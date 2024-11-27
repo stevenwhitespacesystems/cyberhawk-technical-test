@@ -27,5 +27,3 @@ class EquipmentTypeUtils {
 }
 
 export { EquipmentType, EquipmentTypeUtils };
-
-export default EquipmentType;
