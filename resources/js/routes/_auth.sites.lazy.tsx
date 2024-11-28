@@ -1,16 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import Header, { BreadcrumbItemProp } from "@/components/header";
 import { DataTable } from "@/tables/root/data-table";
-import { useState } from "react";
+import { columns } from "@/tables/sites/columns";
 import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/react-table";
+import { useState } from "react";
 import { useTableData } from "@/hooks/use-table-data";
 import { fetchDataForTable } from "@/api/table";
-import { columns } from "@/tables/equipment/columns";
-import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { toast } from "@/hooks/use-toast";
+import { Plus } from "lucide-react";
 
-export const Route = createFileRoute("/_auth/equipment")({
+export const Route = createLazyFileRoute("/_auth/sites")({
     component: RouteComponent,
 });
 
@@ -23,9 +22,9 @@ function RouteComponent() {
     });
 
     const queryFn = () =>
-        fetchDataForTable({ model: "equipment", columns, sorting, columnFilters, pagination });
+        fetchDataForTable({ model: "sites", columns, sorting, columnFilters, pagination });
     const { data: tableData } = useTableData({
-        queryKey: "equipment",
+        queryKey: "sites",
         queryFn,
         sorting,
         columnFilters,
@@ -34,8 +33,8 @@ function RouteComponent() {
 
     const breadcrumbItems: BreadcrumbItemProp[] = [
         {
-            label: "Equipment",
-            href: "/equipment",
+            label: "Sites",
+            href: "/sites",
         },
     ];
 

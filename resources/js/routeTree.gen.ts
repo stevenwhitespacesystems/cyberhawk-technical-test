@@ -8,304 +8,290 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router'
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as LoginImport } from "./routes/login";
-import { Route as AuthImport } from "./routes/_auth";
-import { Route as AuthSitesImport } from "./routes/_auth.sites";
-import { Route as AuthSettingsImport } from "./routes/_auth.settings";
-import { Route as AuthInteractiveImport } from "./routes/_auth.interactive";
-import { Route as AuthInspectionsImport } from "./routes/_auth.inspections";
-import { Route as AuthEquipmentImport } from "./routes/_auth.equipment";
-import { Route as AuthComponentsImport } from "./routes/_auth.components";
+import { Route as rootRoute } from './routes/__root'
+import { Route as LoginImport } from './routes/login'
+import { Route as AuthImport } from './routes/_auth'
+import { Route as AuthComponentsImport } from './routes/_auth.components'
 
 // Create Virtual Routes
 
-const RegisterLazyImport = createFileRoute("/register")();
-const AboutLazyImport = createFileRoute("/about")();
-const IndexLazyImport = createFileRoute("/")();
+const RegisterLazyImport = createFileRoute('/register')()
+const IndexLazyImport = createFileRoute('/')()
+const AuthSitesLazyImport = createFileRoute('/_auth/sites')()
+const AuthSettingsLazyImport = createFileRoute('/_auth/settings')()
+const AuthInteractiveLazyImport = createFileRoute('/_auth/interactive')()
+const AuthInspectionsLazyImport = createFileRoute('/_auth/inspections')()
+const AuthEquipmentLazyImport = createFileRoute('/_auth/equipment')()
 
 // Create/Update Routes
 
 const RegisterLazyRoute = RegisterLazyImport.update({
-    id: "/register",
-    path: "/register",
-    getParentRoute: () => rootRoute,
-} as any).lazy(() => import("./routes/register.lazy").then((d) => d.Route));
-
-const AboutLazyRoute = AboutLazyImport.update({
-    id: "/about",
-    path: "/about",
-    getParentRoute: () => rootRoute,
-} as any).lazy(() => import("./routes/about.lazy").then((d) => d.Route));
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/register.lazy').then((d) => d.Route))
 
 const LoginRoute = LoginImport.update({
-    id: "/login",
-    path: "/login",
-    getParentRoute: () => rootRoute,
-} as any);
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthRoute = AuthImport.update({
-    id: "/_auth",
-    getParentRoute: () => rootRoute,
-} as any);
+  id: '/_auth',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexLazyRoute = IndexLazyImport.update({
-    id: "/",
-    path: "/",
-    getParentRoute: () => rootRoute,
-} as any).lazy(() => import("./routes/index.lazy").then((d) => d.Route));
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
 
-const AuthSitesRoute = AuthSitesImport.update({
-    id: "/sites",
-    path: "/sites",
-    getParentRoute: () => AuthRoute,
-} as any);
+const AuthSitesLazyRoute = AuthSitesLazyImport.update({
+  id: '/sites',
+  path: '/sites',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() => import('./routes/_auth.sites.lazy').then((d) => d.Route))
 
-const AuthSettingsRoute = AuthSettingsImport.update({
-    id: "/settings",
-    path: "/settings",
-    getParentRoute: () => AuthRoute,
-} as any);
+const AuthSettingsLazyRoute = AuthSettingsLazyImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() =>
+  import('./routes/_auth.settings.lazy').then((d) => d.Route),
+)
 
-const AuthInteractiveRoute = AuthInteractiveImport.update({
-    id: "/interactive",
-    path: "/interactive",
-    getParentRoute: () => AuthRoute,
-} as any);
+const AuthInteractiveLazyRoute = AuthInteractiveLazyImport.update({
+  id: '/interactive',
+  path: '/interactive',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() =>
+  import('./routes/_auth.interactive.lazy').then((d) => d.Route),
+)
 
-const AuthInspectionsRoute = AuthInspectionsImport.update({
-    id: "/inspections",
-    path: "/inspections",
-    getParentRoute: () => AuthRoute,
-} as any);
+const AuthInspectionsLazyRoute = AuthInspectionsLazyImport.update({
+  id: '/inspections',
+  path: '/inspections',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() =>
+  import('./routes/_auth.inspections.lazy').then((d) => d.Route),
+)
 
-const AuthEquipmentRoute = AuthEquipmentImport.update({
-    id: "/equipment",
-    path: "/equipment",
-    getParentRoute: () => AuthRoute,
-} as any);
+const AuthEquipmentLazyRoute = AuthEquipmentLazyImport.update({
+  id: '/equipment',
+  path: '/equipment',
+  getParentRoute: () => AuthRoute,
+} as any).lazy(() =>
+  import('./routes/_auth.equipment.lazy').then((d) => d.Route),
+)
 
 const AuthComponentsRoute = AuthComponentsImport.update({
-    id: "/components",
-    path: "/components",
-    getParentRoute: () => AuthRoute,
-} as any);
+  id: '/components',
+  path: '/components',
+  getParentRoute: () => AuthRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
-    interface FileRoutesByPath {
-        "/": {
-            id: "/";
-            path: "/";
-            fullPath: "/";
-            preLoaderRoute: typeof IndexLazyImport;
-            parentRoute: typeof rootRoute;
-        };
-        "/_auth": {
-            id: "/_auth";
-            path: "";
-            fullPath: "";
-            preLoaderRoute: typeof AuthImport;
-            parentRoute: typeof rootRoute;
-        };
-        "/login": {
-            id: "/login";
-            path: "/login";
-            fullPath: "/login";
-            preLoaderRoute: typeof LoginImport;
-            parentRoute: typeof rootRoute;
-        };
-        "/about": {
-            id: "/about";
-            path: "/about";
-            fullPath: "/about";
-            preLoaderRoute: typeof AboutLazyImport;
-            parentRoute: typeof rootRoute;
-        };
-        "/register": {
-            id: "/register";
-            path: "/register";
-            fullPath: "/register";
-            preLoaderRoute: typeof RegisterLazyImport;
-            parentRoute: typeof rootRoute;
-        };
-        "/_auth/components": {
-            id: "/_auth/components";
-            path: "/components";
-            fullPath: "/components";
-            preLoaderRoute: typeof AuthComponentsImport;
-            parentRoute: typeof AuthImport;
-        };
-        "/_auth/equipment": {
-            id: "/_auth/equipment";
-            path: "/equipment";
-            fullPath: "/equipment";
-            preLoaderRoute: typeof AuthEquipmentImport;
-            parentRoute: typeof AuthImport;
-        };
-        "/_auth/inspections": {
-            id: "/_auth/inspections";
-            path: "/inspections";
-            fullPath: "/inspections";
-            preLoaderRoute: typeof AuthInspectionsImport;
-            parentRoute: typeof AuthImport;
-        };
-        "/_auth/interactive": {
-            id: "/_auth/interactive";
-            path: "/interactive";
-            fullPath: "/interactive";
-            preLoaderRoute: typeof AuthInteractiveImport;
-            parentRoute: typeof AuthImport;
-        };
-        "/_auth/settings": {
-            id: "/_auth/settings";
-            path: "/settings";
-            fullPath: "/settings";
-            preLoaderRoute: typeof AuthSettingsImport;
-            parentRoute: typeof AuthImport;
-        };
-        "/_auth/sites": {
-            id: "/_auth/sites";
-            path: "/sites";
-            fullPath: "/sites";
-            preLoaderRoute: typeof AuthSitesImport;
-            parentRoute: typeof AuthImport;
-        };
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexLazyImport
+      parentRoute: typeof rootRoute
     }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterLazyImport
+      parentRoute: typeof rootRoute
+    }
+    '/_auth/components': {
+      id: '/_auth/components'
+      path: '/components'
+      fullPath: '/components'
+      preLoaderRoute: typeof AuthComponentsImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/equipment': {
+      id: '/_auth/equipment'
+      path: '/equipment'
+      fullPath: '/equipment'
+      preLoaderRoute: typeof AuthEquipmentLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/inspections': {
+      id: '/_auth/inspections'
+      path: '/inspections'
+      fullPath: '/inspections'
+      preLoaderRoute: typeof AuthInspectionsLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/interactive': {
+      id: '/_auth/interactive'
+      path: '/interactive'
+      fullPath: '/interactive'
+      preLoaderRoute: typeof AuthInteractiveLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/settings': {
+      id: '/_auth/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthSettingsLazyImport
+      parentRoute: typeof AuthImport
+    }
+    '/_auth/sites': {
+      id: '/_auth/sites'
+      path: '/sites'
+      fullPath: '/sites'
+      preLoaderRoute: typeof AuthSitesLazyImport
+      parentRoute: typeof AuthImport
+    }
+  }
 }
 
 // Create and export the route tree
 
 interface AuthRouteChildren {
-    AuthComponentsRoute: typeof AuthComponentsRoute;
-    AuthEquipmentRoute: typeof AuthEquipmentRoute;
-    AuthInspectionsRoute: typeof AuthInspectionsRoute;
-    AuthInteractiveRoute: typeof AuthInteractiveRoute;
-    AuthSettingsRoute: typeof AuthSettingsRoute;
-    AuthSitesRoute: typeof AuthSitesRoute;
+  AuthComponentsRoute: typeof AuthComponentsRoute
+  AuthEquipmentLazyRoute: typeof AuthEquipmentLazyRoute
+  AuthInspectionsLazyRoute: typeof AuthInspectionsLazyRoute
+  AuthInteractiveLazyRoute: typeof AuthInteractiveLazyRoute
+  AuthSettingsLazyRoute: typeof AuthSettingsLazyRoute
+  AuthSitesLazyRoute: typeof AuthSitesLazyRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-    AuthComponentsRoute: AuthComponentsRoute,
-    AuthEquipmentRoute: AuthEquipmentRoute,
-    AuthInspectionsRoute: AuthInspectionsRoute,
-    AuthInteractiveRoute: AuthInteractiveRoute,
-    AuthSettingsRoute: AuthSettingsRoute,
-    AuthSitesRoute: AuthSitesRoute,
-};
+  AuthComponentsRoute: AuthComponentsRoute,
+  AuthEquipmentLazyRoute: AuthEquipmentLazyRoute,
+  AuthInspectionsLazyRoute: AuthInspectionsLazyRoute,
+  AuthInteractiveLazyRoute: AuthInteractiveLazyRoute,
+  AuthSettingsLazyRoute: AuthSettingsLazyRoute,
+  AuthSitesLazyRoute: AuthSitesLazyRoute,
+}
 
-const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren);
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 export interface FileRoutesByFullPath {
-    "/": typeof IndexLazyRoute;
-    "": typeof AuthRouteWithChildren;
-    "/login": typeof LoginRoute;
-    "/about": typeof AboutLazyRoute;
-    "/register": typeof RegisterLazyRoute;
-    "/components": typeof AuthComponentsRoute;
-    "/equipment": typeof AuthEquipmentRoute;
-    "/inspections": typeof AuthInspectionsRoute;
-    "/interactive": typeof AuthInteractiveRoute;
-    "/settings": typeof AuthSettingsRoute;
-    "/sites": typeof AuthSitesRoute;
+  '/': typeof IndexLazyRoute
+  '': typeof AuthRouteWithChildren
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterLazyRoute
+  '/components': typeof AuthComponentsRoute
+  '/equipment': typeof AuthEquipmentLazyRoute
+  '/inspections': typeof AuthInspectionsLazyRoute
+  '/interactive': typeof AuthInteractiveLazyRoute
+  '/settings': typeof AuthSettingsLazyRoute
+  '/sites': typeof AuthSitesLazyRoute
 }
 
 export interface FileRoutesByTo {
-    "/": typeof IndexLazyRoute;
-    "": typeof AuthRouteWithChildren;
-    "/login": typeof LoginRoute;
-    "/about": typeof AboutLazyRoute;
-    "/register": typeof RegisterLazyRoute;
-    "/components": typeof AuthComponentsRoute;
-    "/equipment": typeof AuthEquipmentRoute;
-    "/inspections": typeof AuthInspectionsRoute;
-    "/interactive": typeof AuthInteractiveRoute;
-    "/settings": typeof AuthSettingsRoute;
-    "/sites": typeof AuthSitesRoute;
+  '/': typeof IndexLazyRoute
+  '': typeof AuthRouteWithChildren
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterLazyRoute
+  '/components': typeof AuthComponentsRoute
+  '/equipment': typeof AuthEquipmentLazyRoute
+  '/inspections': typeof AuthInspectionsLazyRoute
+  '/interactive': typeof AuthInteractiveLazyRoute
+  '/settings': typeof AuthSettingsLazyRoute
+  '/sites': typeof AuthSitesLazyRoute
 }
 
 export interface FileRoutesById {
-    __root__: typeof rootRoute;
-    "/": typeof IndexLazyRoute;
-    "/_auth": typeof AuthRouteWithChildren;
-    "/login": typeof LoginRoute;
-    "/about": typeof AboutLazyRoute;
-    "/register": typeof RegisterLazyRoute;
-    "/_auth/components": typeof AuthComponentsRoute;
-    "/_auth/equipment": typeof AuthEquipmentRoute;
-    "/_auth/inspections": typeof AuthInspectionsRoute;
-    "/_auth/interactive": typeof AuthInteractiveRoute;
-    "/_auth/settings": typeof AuthSettingsRoute;
-    "/_auth/sites": typeof AuthSitesRoute;
+  __root__: typeof rootRoute
+  '/': typeof IndexLazyRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/login': typeof LoginRoute
+  '/register': typeof RegisterLazyRoute
+  '/_auth/components': typeof AuthComponentsRoute
+  '/_auth/equipment': typeof AuthEquipmentLazyRoute
+  '/_auth/inspections': typeof AuthInspectionsLazyRoute
+  '/_auth/interactive': typeof AuthInteractiveLazyRoute
+  '/_auth/settings': typeof AuthSettingsLazyRoute
+  '/_auth/sites': typeof AuthSitesLazyRoute
 }
 
 export interface FileRouteTypes {
-    fileRoutesByFullPath: FileRoutesByFullPath;
-    fullPaths:
-        | "/"
-        | ""
-        | "/login"
-        | "/about"
-        | "/register"
-        | "/components"
-        | "/equipment"
-        | "/inspections"
-        | "/interactive"
-        | "/settings"
-        | "/sites";
-    fileRoutesByTo: FileRoutesByTo;
-    to:
-        | "/"
-        | ""
-        | "/login"
-        | "/about"
-        | "/register"
-        | "/components"
-        | "/equipment"
-        | "/inspections"
-        | "/interactive"
-        | "/settings"
-        | "/sites";
-    id:
-        | "__root__"
-        | "/"
-        | "/_auth"
-        | "/login"
-        | "/about"
-        | "/register"
-        | "/_auth/components"
-        | "/_auth/equipment"
-        | "/_auth/inspections"
-        | "/_auth/interactive"
-        | "/_auth/settings"
-        | "/_auth/sites";
-    fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | ''
+    | '/login'
+    | '/register'
+    | '/components'
+    | '/equipment'
+    | '/inspections'
+    | '/interactive'
+    | '/settings'
+    | '/sites'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | ''
+    | '/login'
+    | '/register'
+    | '/components'
+    | '/equipment'
+    | '/inspections'
+    | '/interactive'
+    | '/settings'
+    | '/sites'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/login'
+    | '/register'
+    | '/_auth/components'
+    | '/_auth/equipment'
+    | '/_auth/inspections'
+    | '/_auth/interactive'
+    | '/_auth/settings'
+    | '/_auth/sites'
+  fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-    IndexLazyRoute: typeof IndexLazyRoute;
-    AuthRoute: typeof AuthRouteWithChildren;
-    LoginRoute: typeof LoginRoute;
-    AboutLazyRoute: typeof AboutLazyRoute;
-    RegisterLazyRoute: typeof RegisterLazyRoute;
+  IndexLazyRoute: typeof IndexLazyRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  RegisterLazyRoute: typeof RegisterLazyRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-    IndexLazyRoute: IndexLazyRoute,
-    AuthRoute: AuthRouteWithChildren,
-    LoginRoute: LoginRoute,
-    AboutLazyRoute: AboutLazyRoute,
-    RegisterLazyRoute: RegisterLazyRoute,
-};
+  IndexLazyRoute: IndexLazyRoute,
+  AuthRoute: AuthRouteWithChildren,
+  LoginRoute: LoginRoute,
+  RegisterLazyRoute: RegisterLazyRoute,
+}
 
 export const routeTree = rootRoute
-    ._addFileChildren(rootRouteChildren)
-    ._addFileTypes<FileRouteTypes>();
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {
@@ -316,7 +302,6 @@ export const routeTree = rootRoute
         "/",
         "/_auth",
         "/login",
-        "/about",
         "/register"
       ]
     },
@@ -337,9 +322,6 @@ export const routeTree = rootRoute
     "/login": {
       "filePath": "login.tsx"
     },
-    "/about": {
-      "filePath": "about.lazy.tsx"
-    },
     "/register": {
       "filePath": "register.lazy.tsx"
     },
@@ -348,23 +330,23 @@ export const routeTree = rootRoute
       "parent": "/_auth"
     },
     "/_auth/equipment": {
-      "filePath": "_auth.equipment.tsx",
+      "filePath": "_auth.equipment.lazy.tsx",
       "parent": "/_auth"
     },
     "/_auth/inspections": {
-      "filePath": "_auth.inspections.tsx",
+      "filePath": "_auth.inspections.lazy.tsx",
       "parent": "/_auth"
     },
     "/_auth/interactive": {
-      "filePath": "_auth.interactive.tsx",
+      "filePath": "_auth.interactive.lazy.tsx",
       "parent": "/_auth"
     },
     "/_auth/settings": {
-      "filePath": "_auth.settings.tsx",
+      "filePath": "_auth.settings.lazy.tsx",
       "parent": "/_auth"
     },
     "/_auth/sites": {
-      "filePath": "_auth.sites.tsx",
+      "filePath": "_auth.sites.lazy.tsx",
       "parent": "/_auth"
     }
   }

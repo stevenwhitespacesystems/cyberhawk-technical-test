@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import Header, { BreadcrumbItemProp } from "@/components/header";
 import { ColumnFiltersState, PaginationState, SortingState } from "@tanstack/react-table";
 import { useState } from "react";
@@ -20,7 +20,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-export const Route = createFileRoute("/_auth/inspections")({
+export const Route = createLazyFileRoute("/_auth/inspections")({
     component: RouteComponent,
 });
 

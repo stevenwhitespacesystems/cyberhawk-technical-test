@@ -1,8 +1,7 @@
-import * as React from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import Header, { BreadcrumbItemProp } from "@/components/header";
 
-export const Route = createFileRoute("/_auth/settings")({
+export const Route = createLazyFileRoute("/_auth/settings")({
     component: RouteComponent,
 });
 
