@@ -15,6 +15,10 @@ class Inspection extends Model
     use HasFactory;
     use HasUlids;
 
+    protected $casts = [
+        'grade' => 'float',
+    ];
+
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class);
