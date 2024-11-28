@@ -64,34 +64,6 @@ export const columns: ColumnDef<Inspection>[] = [
         enableColumnFilter: false,
     },
     {
-        id: "scheduled_date",
-        accessorKey: "scheduled_date",
-        header: ({ column }) => (
-            <Button
-                variant="ghost"
-                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            >
-                Scheduled
-                <ArrowUpDown className="ml-2 h-4 w-4" />
-            </Button>
-        ),
-        meta: {
-            filterVariant: "date",
-        },
-        cell({ cell }) {
-            const value = cell.getValue();
-            if (typeof value === "string" || typeof value === "number") {
-                const date = new Date(value);
-                if (isNaN(date.getTime())) {
-                    return ""; // Invalid date
-                }
-                return date.toLocaleDateString();
-            }
-            return ""; // Unknown type
-        },
-        enableColumnFilter: false,
-    },
-    {
         id: "site.name",
         accessorKey: "site.name",
         header: ({ column }) => (
