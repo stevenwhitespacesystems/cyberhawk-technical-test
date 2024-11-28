@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Inspection;
 
+use App\Http\Responses\ApiResponses;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ViewRequest extends FormRequest
 {
@@ -21,5 +24,10 @@ class ViewRequest extends FormRequest
         return [
             self::ID => ['required', 'ulid', 'exists:inspections,id'],
         ];
+    }
+
+    public function failedValidation(Validator $validator): void
+    {
+        throw new HttpResponseException(ApiResponses::validationError($validator));
     }
 }
