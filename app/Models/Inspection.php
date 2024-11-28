@@ -10,12 +10,26 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property string             $id
+ * @property string             $site_id
+ * @property Site               $site
+ * @property string             $equipment_id
+ * @property Equipment          $equipment
+ * @property int                $reference
+ * @property ?Carbon            $scheduled_date
+ * @property ?Carbon            $completed_date
+ * @property ?float             $grade
+ */
 class Inspection extends Model
 {
     use HasFactory;
     use HasUlids;
 
     protected $casts = [
+        'reference' => 'integer',
+        'scheduled_date' => 'date',
+        'completed_date' => 'date',
         'grade' => 'float',
     ];
 

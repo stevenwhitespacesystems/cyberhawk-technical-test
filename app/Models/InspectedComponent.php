@@ -10,13 +10,27 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * @property float $grade
+ * @property string             $id
+ * @property string             $inspection_id
+ * @property Inspection         $inspection
+ * @property string             $component_id
+ * @property Component          $component
+ * @property ?string            $user_id
+ * @property ?User              $user
+ * @property ?Carbon            $scheduled_date
+ * @property ?Carbon            $completed_date
+ * @property ?int               $grade
  */
 class InspectedComponent extends Model
 {
     use HasFactory;
     use HasUlids;
 
+    protected $casts = [
+        'scheduled_date' => 'date',
+        'completed_date' => 'date',
+        'grade' => 'integer',
+    ];
 
     public function component(): BelongsTo
     {

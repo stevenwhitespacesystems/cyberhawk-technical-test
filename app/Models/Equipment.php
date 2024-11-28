@@ -8,7 +8,6 @@ use App\DTO\GeoJSON\EquipmentPropertiesDTO;
 use App\DTO\GeoJSON\FeatureDTO;
 use App\DTO\GeoJSON\GeometryDTO;
 use App\Enums\EquipmentType;
-use App\Enums\InspectionStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,12 +16,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property string $id
- * @property string $nickname
- * @property string $serial_number
- * @property EquipmentType $type
- * @property float $longitude
- * @property float $latitude
+ * @property string             $id
+ * @property string             $site_id
+ * @property Site               $site
+ * @property EquipmentType      $type
+ * @property ?string            $serial_number
+ * @property ?string            $nickname
+ * @property ?Carbon            $installation_date
+ * @property float              $latitude
+ * @property float              $longitude
  */
 class Equipment extends Model
 {
@@ -34,9 +36,9 @@ class Equipment extends Model
      */
     protected $casts = [
         'type' => EquipmentType::class,
-        'status' => InspectionStatus::class,
         'latitude' => 'float',
         'longitude' => 'float',
+        'installation_date' => 'date',
     ];
 
     final protected function feature(): Attribute

@@ -14,10 +14,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * @property string $id
- * @property string $name
- * @property float $latitude
- * @property float $longitude
+ * @property string             $id
+ * @property string             $name
+ * @property ?string            $description
+ * @property string             $address_line_1
+ * @property ?string            $address_line_2
+ * @property string             $city
+ * @property ?string            $state
+ * @property string             $postal_code
+ * @property string             $country
+ * @property float              $latitude
+ * @property float              $longitude
  */
 class Site extends Model
 {

@@ -11,6 +11,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property string             $id
+ * @property string             $site_id
+ * @property Site               $site
+ * @property string             $equipment_id
+ * @property Equipment          $equipment
+ * @property string             $serial_number
+ * @property ComponentType      $type
+ * @property ?string             $specifications
+ */
 class Component extends Model
 {
     use HasFactory;
