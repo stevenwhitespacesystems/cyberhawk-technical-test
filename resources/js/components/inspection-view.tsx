@@ -3,6 +3,8 @@ import { useInspectionView } from "@/hooks/use-inspection-view";
 import { EquipmentType, EquipmentTypeUtils } from "@/enums/equipment-types";
 import { ComponentType, ComponentTypeUtils } from "@/enums/component-types";
 import Slider from "@mui/material/Slider";
+import getGradeVariant from "@/lib/getGradeVariant";
+import { useUpdateInspectedComponentGrade } from "@/hooks/use-update-inspected-component-grade";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import {
     Dialog,
@@ -13,6 +15,7 @@ import {
     DialogTrigger,
 } from "./ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import { Badge } from "./ui/badge";
 
 type Props = {
     inspectionId: string;
@@ -38,6 +41,8 @@ function InspectionView({ inspectionId, children }: Props) {
         dialogOpen: open,
         inspectionId,
     });
+
+    const { mutate: updateGrade } = useUpdateInspectedComponentGrade(inspectionId);
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -157,6 +162,16 @@ function InspectionView({ inspectionId, children }: Props) {
                                             ).toLocaleDateString()}
                                         </dd>
                                     </dl>
+                                    <dl className="text-right">
+                                        <dt className="text-gray-500 text-sm">
+                                            Avg. Component Grade
+                                        </dt>
+                                        <dd>
+                                            <Badge variant={getGradeVariant(inspection.grade)}>
+                                                {inspection.grade}
+                                            </Badge>
+                                        </dd>
+                                    </dl>
                                 </div>
                             </CardContent>
                         </Card>
@@ -218,6 +233,11 @@ function InspectionView({ inspectionId, children }: Props) {
                                                     setGrades({
                                                         ...grades,
                                                         [inspectedComponent.id]: value as number,
+                                                    });
+
+                                                    updateGrade({
+                                                        id: inspectedComponent.id,
+                                                        grade: value as number,
                                                     });
                                                 }}
                                                 sx={{
