@@ -16,6 +16,16 @@ final class InspectionRepository extends Repository
         parent::__construct(Inspection::class);
     }
 
+    final public function findAvgGradeWithInspectedComponentsGrade(string $id): Inspection
+    {
+        /** @var Inspection */
+        return $this->createQueryBuilder()
+            ->with('inspectedComponents', static function (HasMany $query) {
+                $query->select('id', 'grade', 'inspection_id');
+            })
+            ->findOrFail($id, ['id', 'grade']);
+    }
+
     final public function viewInspection(string $id): Inspection
     {
         /** @var Inspection */

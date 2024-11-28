@@ -41,4 +41,12 @@ final class InspectionService implements InspectionServiceContract
 
         return $inspection;
     }
+
+    final public function evaluateAverageGrade(string $inspectionId): void
+    {
+        $inspection = $this->inspectionRepository->findAvgGradeWithInspectedComponentsGrade($inspectionId);
+        $averageGrade = $inspection->inspectedComponents->avg('grade');
+        $inspection->grade = $averageGrade;
+        $inspection->save();
+    }
 }

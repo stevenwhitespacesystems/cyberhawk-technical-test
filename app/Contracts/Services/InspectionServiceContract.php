@@ -13,4 +13,6 @@ interface InspectionServiceContract
     public function getTableData(TableRequest $request): TableDataDTO;
 
     public function viewInspection(string $inspectionId): Inspection;
+
+    public function evaluateAverageGrade(string $inspectionId): void;
 }
