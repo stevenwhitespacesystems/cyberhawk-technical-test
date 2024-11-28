@@ -6,5 +6,5 @@ namespace App\Contracts\Services;
 
 interface InspectedComponentServiceContract
 {
-    public function updateGrade(string $id, float $grade): void;
+    public function updateGrade(string $id, int $grade): void;
 }

@@ -18,7 +18,7 @@ class UpdateGradeController extends Controller
     ): JsonResponse {
         $payload = $request->validated();
         $id = $payload[UpdateGradeRequest::ID];
-        $grade = $payload[UpdateGradeRequest::GRADE];
+        $grade = (int) $payload[UpdateGradeRequest::GRADE];
 
         $inspectedComponentService->updateGrade($id, $grade);
 

@@ -17,7 +17,7 @@ final class InspectedComponentService implements InspectedComponentServiceContra
     ) {
     }
 
-    final public function updateGrade(string $id, float $grade): void
+    final public function updateGrade(string $id, int $grade): void
     {
         /** @var InspectedComponent $inspectedComponent */
         $inspectedComponent = $this->inspectedComponentRepository->find($id, ['id', 'grade', 'inspection_id']);
