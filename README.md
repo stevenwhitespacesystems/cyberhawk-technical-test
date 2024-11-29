@@ -82,3 +82,12 @@ This is a place for you to add your notes, plans, thinking and any feedback you 
 -   [Getting Started](<notes/Getting Started.md>)
 -   [User Authentication](<notes/User Authentication.md>)
 -   [Future Considerations](<notes/Future Considerations.md>)
+
+### Video Demonstration
+
+<video width="720" height="480" controls>
+  <source src="notes/Demo.webm" type="video/webm">
+  Your browser does not support the video tag.
+</video>
+
+For users unable to see the embedded video, [click here to view the demo video directly](notes/Demo.webm).
