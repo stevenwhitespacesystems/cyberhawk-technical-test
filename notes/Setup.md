@@ -60,7 +60,7 @@ For styling I've installed Tailwind CSS as it is the modern standard for styling
 
 I've opted against using a CRUD style approach for the backend as I structured the project in a way that allows for more flexibility and scalability using Services and Repositories. If we ever wanted to build a public API for this project, we could easily do so by adding a new controller that interacts with the Services and Repositories in a CRUD style approach.
 
-I've installed ECS to lint the php code and PHPStan to check for errors and potential security issues.
+I've installed ECS to format the php code and PHPStan to check for errors and potential security issues.
 
 For authentication I've installed Laravel Sanctum as it is the modern standard for authentication in Laravel.
 

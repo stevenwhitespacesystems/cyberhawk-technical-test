@@ -97,7 +97,6 @@
 - Rate limiting
 - Documentation
 - Versioning
-- SDK development
 - Integration examples
 - Webhook support
 

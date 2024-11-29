@@ -51,7 +51,6 @@ The application uses TanStack Router with a file-based routing system. Main rout
 - Popup information for equipment details
 
 #### Inspection Management
-- CRUD operations for inspections
 - Component grading system (1-5 scale)
 - Detailed inspection views with site and equipment information
 - Pagination and filtering capabilities
