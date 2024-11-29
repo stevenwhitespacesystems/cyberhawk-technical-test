@@ -42,6 +42,8 @@ This updated Laravel Sail to the latest compatible version and updated the Docke
 
 The project could now be accessed after running `sail up -d`
 
+I can submit a PR to the main repository to fix the issue if required.
+
 ## Frontend
 
 I opted to use Vite and React instead of Laravel Mix as Vite is the currently supported build tool for Laravel and React is the modern standard for building frontend applications.
@@ -56,8 +58,12 @@ For styling I've installed Tailwind CSS as it is the modern standard for styling
 
 ## Backend
 
+I've opted against using a CRUD style approach for the backend as I structured the project in a way that allows for more flexibility and scalability using Services and Repositories. If we ever wanted to build a public API for this project, we could easily do so by adding a new controller that interacts with the Services and Repositories in a CRUD style approach.
+
 I've installed ECS to lint the php code and PHPStan to check for errors and potential security issues.
+
+For authentication I've installed Laravel Sanctum as it is the modern standard for authentication in Laravel.
 
 ## Git Hooks
 
-I've installed Husky to run the format-lint and format-stan commands on commit which will format the typescript code and lint it as well as check the php code for errors and potential security issues.
+I've installed Husky to run the format-lint and format-stan commands on commit which will format the typescript code and lint it as well as check the php code for errors and potential security issues before committing to the repository.
