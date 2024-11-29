@@ -26,6 +26,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::factory()->count(4)->create();
+        // Create test user
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+
         $harburnhead = Site::factory()->create([
             'name' => 'Harburnhead Wind Farm',
             'short_identifier' => 'WF-HB',
